@@ -25,8 +25,6 @@
       --whatsapp: #25d366;
       --radius: 16px;
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --danger: #ef4444;
-      --success: #10b981;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -52,9 +50,6 @@
     }
     .btn-primary { background: var(--accent); color: white; }
     .btn-whatsapp { background: var(--whatsapp); color: white; }
-    .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-success { background: var(--success); color: white; }
     .btn-small { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
 
     .navbar {
@@ -64,7 +59,7 @@
       border-bottom: 1px solid var(--border);
       padding: 0.8rem 0;
     }
-    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
     .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
     .logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
@@ -139,19 +134,6 @@
     footer { background: var(--primary); color: white; padding: 3rem 0; text-align: center; }
     footer a { color: #94a3b8; text-decoration: none; }
 
-    /* Admin Modal - SIMPLIFIED */
-    #adminModal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); z-index: 999;
-      display: none;
-      align-items: center; justify-content: center; padding: 1rem;
-    }
-    #adminModal.open { display: flex !important; }
-    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; }
-    .modal input, .modal select, .modal textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; font-family: inherit; }
-    .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 0.5rem; }
-    .modal-buttons { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .hero { flex-direction: column; text-align: center; }
@@ -174,7 +156,7 @@
         <a href="#offers">Offers</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <button class="btn btn-primary btn-small" onclick="document.getElementById('adminModal').classList.add('open'); showAddService();">Admin</button>
+        <a href="admin.html" class="btn btn-primary btn-small">Admin</a>
       </div>
     </div>
   </nav>
@@ -256,21 +238,6 @@
   </footer>
 
   <a href="https://wa.me/923712245418" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">💬</a>
-
-  <!-- ADMIN MODAL - SIMPLE VERSION -->
-  <div id="adminModal">
-    <div class="modal">
-      <h2 style="margin-bottom:1rem;">Admin Dashboard</h2>
-      <div class="modal-buttons">
-        <button class="btn btn-primary btn-small" onclick="showAddService()">+ Add Service</button>
-        <button class="btn btn-success btn-small" onclick="showAddOffer()">+ Add Offer</button>
-        <button class="btn btn-outline btn-small" onclick="showServiceList()">View Services</button>
-        <button class="btn btn-outline btn-small" onclick="showOfferList()">View Offers</button>
-      </div>
-      <div id="adminContent"></div>
-      <button class="btn btn-danger" onclick="document.getElementById('adminModal').classList.remove('open')" style="margin-top:1rem;width:100%;">Close</button>
-    </div>
-  </div>
 
   <script>
     const SUPABASE_URL = 'https://kfdhijucdkfjpjfxqbfd.supabase.co';
@@ -358,81 +325,6 @@
       renderSlider('featuredSlider', services.slice(0, 6), serviceCard);
       renderSlider('offersSlider', offers, offerCard);
       renderSlider('allServicesSlider', services, serviceCard);
-    }
-
-    function showAddService() {
-      document.getElementById('adminContent').innerHTML = `
-        <h3>Add New Service</h3>
-        <input id="sName" placeholder="Service Name*">
-        <input id="sBrand" placeholder="Category*">
-        <input id="sPrice" placeholder="Price (Rs.)*" type="number">
-        <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
-        <input id="sImage" placeholder="Image URL (optional)">
-        <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>`;
-    }
-
-    function showAddOffer() {
-      document.getElementById('adminContent').innerHTML = `
-        <h3>Add New Offer</h3>
-        <input id="oTitle" placeholder="Offer Title*">
-        <input id="oOriginalPrice" placeholder="Original Price*" type="number">
-        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
-        <input id="oExpiry" placeholder="Expiry Date*" type="date">
-        <input id="oImage" placeholder="Image URL (optional)">
-        <button class="btn btn-success" onclick="addOffer()" style="width:100%;">Add Offer</button>`;
-    }
-
-    async function showServiceList() {
-      const services = await loadServices();
-      document.getElementById('adminContent').innerHTML = `
-        <h3>Services (${services.length})</h3>
-        ${services.map(s => `<div class="admin-list-item"><span><strong>${s.name}</strong> - Rs. ${Number(s.price).toLocaleString()}</span><button class="btn btn-danger btn-small" onclick="delService(${s.id})">Delete</button></div>`).join('') || '<p>No services.</p>'}`;
-    }
-
-    async function showOfferList() {
-      const { data: offers } = await supabase.from('offers').select('*');
-      document.getElementById('adminContent').innerHTML = `
-        <h3>Offers (${offers ? offers.length : 0})</h3>
-        ${(offers || []).map(o => `<div class="admin-list-item"><span><strong>${o.title}</strong> - Rs. ${Number(o.discounted_price).toLocaleString()}</span><button class="btn btn-danger btn-small" onclick="delOffer(${o.id})">Delete</button></div>`).join('') || '<p>No offers.</p>'}`;
-    }
-
-    async function addService() {
-      const name = document.getElementById('sName').value;
-      const brand = document.getElementById('sBrand').value;
-      const price = document.getElementById('sPrice').value;
-      if (!name || !brand || !price) { alert('Fill all required fields'); return; }
-      await supabase.from('products').insert([{name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value, availability: true}]);
-      alert('✅ Service added!');
-      init();
-      showServiceList();
-    }
-
-    async function addOffer() {
-      const title = document.getElementById('oTitle').value;
-      const original = Number(document.getElementById('oOriginalPrice').value);
-      const discounted = Number(document.getElementById('oDiscountedPrice').value);
-      const expiry = document.getElementById('oExpiry').value;
-      if (!title || !original || !discounted || !expiry) { alert('Fill all required fields'); return; }
-      await supabase.from('offers').insert([{title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original - discounted) / original) * 100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true}]);
-      alert('✅ Offer added!');
-      init();
-      showOfferList();
-    }
-
-    async function delService(id) {
-      if (!confirm('Delete?')) return;
-      await supabase.from('products').delete().eq('id', id);
-      alert('✅ Deleted!');
-      init();
-      showServiceList();
-    }
-
-    async function delOffer(id) {
-      if (!confirm('Delete?')) return;
-      await supabase.from('offers').delete().eq('id', id);
-      alert('✅ Deleted!');
-      init();
-      showOfferList();
     }
 
     init();
