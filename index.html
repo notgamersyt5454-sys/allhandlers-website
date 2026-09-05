@@ -33,6 +33,8 @@
       --whatsapp: #25d366;
       --radius: 16px;
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
+      --danger: #ef4444;
+      --success: #10b981;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -62,6 +64,8 @@
     .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
     .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
     .btn-outline:hover { background: var(--accent); color: white; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-success { background: var(--success); color: white; }
 
     .navbar {
       position: sticky; top: 0; z-index: 100;
@@ -155,8 +159,11 @@
       background: rgba(0,0,0,0.5); z-index: 300; display: none;
       align-items: center; justify-content: center; padding: 1rem;
     }
-    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
     .modal input, .modal select, .modal textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; font-family: inherit; }
+    .admin-list { margin-bottom: 1rem; }
+    .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid var(--border); }
+    .admin-list-item button { margin-left: 0.5rem; padding: 0.3rem 0.8rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -283,12 +290,14 @@
   <div class="modal-overlay" id="adminModal">
     <div class="modal">
       <h2 style="margin-bottom:1rem;">Admin Dashboard</h2>
-      <select id="adminType" onchange="showAdminForm()">
-        <option value="service">Add Service</option>
-        <option value="offer">Add Offer</option>
-      </select>
-      <div id="adminForm"></div>
-      <button class="btn btn-outline" onclick="closeAdmin()" style="margin-top:1rem;width:100%;">Close</button>
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="showAddService()">+ Add Service</button>
+        <button class="btn btn-success" onclick="showAddOffer()">+ Add Offer</button>
+        <button class="btn btn-outline" onclick="showServiceList()">View Services</button>
+        <button class="btn btn-outline" onclick="showOfferList()">View Offers</button>
+      </div>
+      <div id="adminContent"></div>
+      <button class="btn btn-danger" onclick="closeAdmin()" style="margin-top:1rem;width:100%;">Close</button>
     </div>
   </div>
 
@@ -299,7 +308,7 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function loadServices() {
-      const { data, error } = await supabase.from('products').select('*');
+      const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
       if (error) return [];
       return data || [];
     }
@@ -321,6 +330,7 @@
           </div>
           <div class="service-info">
             <h3>${s.name}</h3>
+            <span style="font-size:0.85rem;color:var(--text-light);">${s.brand || 'Service'}</span>
             <div class="price-row">
               ${s.discount_price ? `<span class="original-price">Rs. ${Number(s.price).toLocaleString()}</span>` : ''}
               <span class="current-price">Rs. ${Number(s.discount_price || s.price).toLocaleString()}</span>
@@ -396,30 +406,69 @@
       renderSlider('allServicesSlider', services, serviceCard);
     }
 
-    function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; showAdminForm(); }
+    // Admin Functions
+    function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; showAddService(); }
     function closeAdmin() { document.getElementById('adminModal').style.display = 'none'; }
-    function showAdminForm() {
-      const type = document.getElementById('adminType').value;
-      const form = document.getElementById('adminForm');
-      if (type === 'service') {
-        form.innerHTML = `
-          <input id="sName" placeholder="Service Name*">
-          <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*">
-          <input id="sPrice" placeholder="Price (Rs.)*" type="number">
-          <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
-          <input id="sImage" placeholder="Image URL">
-          <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>
-        `;
-      } else {
-        form.innerHTML = `
-          <input id="oTitle" placeholder="Offer Title*">
-          <input id="oOriginalPrice" placeholder="Original Price*" type="number">
-          <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
-          <input id="oExpiry" placeholder="Expiry Date*" type="date">
-          <input id="oImage" placeholder="Image URL">
-          <button class="btn btn-primary" onclick="addOffer()" style="width:100%;">Add Offer</button>
-        `;
-      }
+    
+    function showAddService() {
+      document.getElementById('adminContent').innerHTML = `
+        <h3>Add New Service</h3>
+        <input id="sName" placeholder="Service Name*">
+        <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*">
+        <input id="sPrice" placeholder="Price (Rs.)*" type="number">
+        <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
+        <input id="sDescription" placeholder="Description">
+        <input id="sImage" placeholder="Image URL">
+        <select id="sFeatured"><option value="false">Not Featured</option><option value="true">Featured</option></select>
+        <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>
+      `;
+    }
+
+    function showAddOffer() {
+      document.getElementById('adminContent').innerHTML = `
+        <h3>Add New Offer</h3>
+        <input id="oTitle" placeholder="Offer Title*">
+        <input id="oOriginalPrice" placeholder="Original Price*" type="number">
+        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
+        <input id="oExpiry" placeholder="Expiry Date*" type="date">
+        <input id="oDescription" placeholder="Description">
+        <input id="oImage" placeholder="Image URL">
+        <button class="btn btn-success" onclick="addOffer()" style="width:100%;">Add Offer</button>
+      `;
+    }
+
+    async function showServiceList() {
+      const services = await loadServices();
+      document.getElementById('adminContent').innerHTML = `
+        <h3>Manage Services (${services.length})</h3>
+        <div class="admin-list">
+          ${services.map(s => `
+            <div class="admin-list-item">
+              <span>${s.name} - Rs. ${Number(s.price).toLocaleString()}</span>
+              <div>
+                <button class="btn-danger" onclick="deleteService(${s.id})">Delete</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    async function showOfferList() {
+      const { data: offers } = await supabase.from('offers').select('*').order('created_at', { ascending: false });
+      document.getElementById('adminContent').innerHTML = `
+        <h3>Manage Offers (${offers ? offers.length : 0})</h3>
+        <div class="admin-list">
+          ${(offers || []).map(o => `
+            <div class="admin-list-item">
+              <span>${o.title} - Rs. ${Number(o.discounted_price).toLocaleString()}</span>
+              <div>
+                <button class="btn-danger" onclick="deleteOffer(${o.id})">Delete</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
 
     async function addService() {
@@ -428,12 +477,14 @@
         brand: document.getElementById('sBrand').value,
         price: Number(document.getElementById('sPrice').value),
         discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
+        description: document.getElementById('sDescription').value,
         image_url: document.getElementById('sImage').value,
+        featured: document.getElementById('sFeatured').value === 'true',
         availability: true
       };
       const { error } = await supabase.from('products').insert([data]);
       if (error) alert('Error: ' + error.message);
-      else { alert('Service added!'); closeAdmin(); init(); }
+      else { alert('Service added!'); init(); showServiceList(); }
     }
 
     async function addOffer() {
@@ -445,12 +496,27 @@
         discounted_price: discounted,
         discount_percentage: Math.round(((original - discounted) / original) * 100),
         expiry_date: document.getElementById('oExpiry').value,
+        description: document.getElementById('oDescription').value,
         image_url: document.getElementById('oImage').value,
         active: true
       };
       const { error } = await supabase.from('offers').insert([data]);
       if (error) alert('Error: ' + error.message);
-      else { alert('Offer added!'); closeAdmin(); init(); }
+      else { alert('Offer added!'); init(); showOfferList(); }
+    }
+
+    async function deleteService(id) {
+      if (!confirm('Delete this service?')) return;
+      const { error } = await supabase.from('products').delete().eq('id', id);
+      if (error) alert('Error: ' + error.message);
+      else { alert('Deleted!'); init(); showServiceList(); }
+    }
+
+    async function deleteOffer(id) {
+      if (!confirm('Delete this offer?')) return;
+      const { error } = await supabase.from('offers').delete().eq('id', id);
+      if (error) alert('Error: ' + error.message);
+      else { alert('Deleted!'); init(); showOfferList(); }
     }
 
     function toggleMobileMenu() {
