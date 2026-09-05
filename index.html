@@ -66,6 +66,7 @@
     .btn-outline:hover { background: var(--accent); color: white; }
     .btn-danger { background: var(--danger); color: white; }
     .btn-success { background: var(--success); color: white; }
+    .btn-small { padding: 0.4rem 1rem; font-size: 0.8rem; }
 
     .navbar {
       position: sticky; top: 0; z-index: 100;
@@ -77,7 +78,7 @@
     .nav-container { display: flex; align-items: center; justify-content: space-between; }
     .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
     .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links { display: flex; gap: 1.2rem; align-items: center; }
     .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; }
     .nav-links a:hover { color: var(--accent); }
     .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
@@ -156,14 +157,13 @@
 
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); z-index: 300; display: none;
+      background: rgba(0,0,0,0.7); z-index: 300; display: none;
       align-items: center; justify-content: center; padding: 1rem;
     }
     .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
     .modal input, .modal select, .modal textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; font-family: inherit; }
     .admin-list { margin-bottom: 1rem; }
-    .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid var(--border); }
-    .admin-list-item button { margin-left: 0.5rem; padding: 0.3rem 0.8rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+    .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 0.5rem; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -188,8 +188,8 @@
         <a href="#offers">Offers</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <button class="btn btn-primary" onclick="openAdmin()">Admin</button>
       </div>
+      <button class="btn btn-primary btn-small" onclick="openAdmin()">Admin</button>
       <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
     </div>
   </nav>
@@ -287,14 +287,14 @@
 
   <a href="https://wa.me/923712245418" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">💬</a>
 
-  <div class="modal-overlay" id="adminModal">
+  <div class="modal-overlay" id="adminModal" onclick="if(event.target===this)closeAdmin()">
     <div class="modal">
       <h2 style="margin-bottom:1rem;">Admin Dashboard</h2>
       <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-        <button class="btn btn-primary" onclick="showAddService()">+ Add Service</button>
-        <button class="btn btn-success" onclick="showAddOffer()">+ Add Offer</button>
-        <button class="btn btn-outline" onclick="showServiceList()">View Services</button>
-        <button class="btn btn-outline" onclick="showOfferList()">View Offers</button>
+        <button class="btn btn-primary btn-small" onclick="showAddService()">+ Add Service</button>
+        <button class="btn btn-success btn-small" onclick="showAddOffer()">+ Add Offer</button>
+        <button class="btn btn-outline btn-small" onclick="showServiceList()">View Services</button>
+        <button class="btn btn-outline btn-small" onclick="showOfferList()">View Offers</button>
       </div>
       <div id="adminContent"></div>
       <button class="btn btn-danger" onclick="closeAdmin()" style="margin-top:1rem;width:100%;">Close</button>
@@ -309,14 +309,14 @@
 
     async function loadServices() {
       const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-      if (error) return [];
+      if (error) { console.error(error); return []; }
       return data || [];
     }
 
     async function loadOffers() {
       const now = new Date().toISOString();
       const { data, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
-      if (error) return [];
+      if (error) { console.error(error); return []; }
       return data || [];
     }
 
@@ -372,7 +372,8 @@
 
     function renderSlider(containerId, items, cardFn) {
       const container = document.getElementById(containerId);
-      if (!container || !items.length) { container.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items available.</p>'; return; }
+      if (!container) return;
+      if (!items.length) { container.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items available. Add services from Admin panel.</p>'; return; }
       container.innerHTML = `
         <button class="slider-btn prev" onclick="slidePrev('${containerId}')">‹</button>
         <div class="slider-track" id="${containerId}-track">${items.map(cardFn).join('')}</div>
@@ -383,19 +384,17 @@
     let sliderPositions = {};
     function slideNext(id) {
       const track = document.getElementById(id + '-track');
-      const cards = track.children;
-      if (!cards.length) return;
+      if (!track || !track.children.length) return;
       sliderPositions[id] = (sliderPositions[id] || 0) + 1;
-      if (sliderPositions[id] >= cards.length) sliderPositions[id] = 0;
-      track.style.transform = `translateX(-${sliderPositions[id] * (cards[0].offsetWidth + 24)}px)`;
+      if (sliderPositions[id] >= track.children.length) sliderPositions[id] = 0;
+      track.style.transform = `translateX(-${sliderPositions[id] * (track.children[0].offsetWidth + 24)}px)`;
     }
     function slidePrev(id) {
       const track = document.getElementById(id + '-track');
-      const cards = track.children;
-      if (!cards.length) return;
+      if (!track || !track.children.length) return;
       sliderPositions[id] = (sliderPositions[id] || 0) - 1;
-      if (sliderPositions[id] < 0) sliderPositions[id] = cards.length - 1;
-      track.style.transform = `translateX(-${sliderPositions[id] * (cards[0].offsetWidth + 24)}px)`;
+      if (sliderPositions[id] < 0) sliderPositions[id] = track.children.length - 1;
+      track.style.transform = `translateX(-${sliderPositions[id] * (track.children[0].offsetWidth + 24)}px)`;
     }
 
     async function init() {
@@ -406,16 +405,20 @@
       renderSlider('allServicesSlider', services, serviceCard);
     }
 
-    // Admin Functions
-    function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; showAddService(); }
-    function closeAdmin() { document.getElementById('adminModal').style.display = 'none'; }
-    
+    function openAdmin() {
+      document.getElementById('adminModal').style.display = 'flex';
+      showAddService();
+    }
+    function closeAdmin() {
+      document.getElementById('adminModal').style.display = 'none';
+    }
+
     function showAddService() {
       document.getElementById('adminContent').innerHTML = `
         <h3>Add New Service</h3>
-        <input id="sName" placeholder="Service Name*">
-        <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*">
-        <input id="sPrice" placeholder="Price (Rs.)*" type="number">
+        <input id="sName" placeholder="Service Name*" required>
+        <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*" required>
+        <input id="sPrice" placeholder="Price (Rs.)*" type="number" required>
         <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
         <input id="sDescription" placeholder="Description">
         <input id="sImage" placeholder="Image URL">
@@ -427,10 +430,10 @@
     function showAddOffer() {
       document.getElementById('adminContent').innerHTML = `
         <h3>Add New Offer</h3>
-        <input id="oTitle" placeholder="Offer Title*">
-        <input id="oOriginalPrice" placeholder="Original Price*" type="number">
-        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
-        <input id="oExpiry" placeholder="Expiry Date*" type="date">
+        <input id="oTitle" placeholder="Offer Title*" required>
+        <input id="oOriginalPrice" placeholder="Original Price*" type="number" required>
+        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number" required>
+        <input id="oExpiry" placeholder="Expiry Date*" type="date" required>
         <input id="oDescription" placeholder="Description">
         <input id="oImage" placeholder="Image URL">
         <button class="btn btn-success" onclick="addOffer()" style="width:100%;">Add Offer</button>
@@ -444,12 +447,10 @@
         <div class="admin-list">
           ${services.map(s => `
             <div class="admin-list-item">
-              <span>${s.name} - Rs. ${Number(s.price).toLocaleString()}</span>
-              <div>
-                <button class="btn-danger" onclick="deleteService(${s.id})">Delete</button>
-              </div>
+              <span><strong>${s.name}</strong> - Rs. ${Number(s.price).toLocaleString()}</span>
+              <button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button>
             </div>
-          `).join('')}
+          `).join('') || '<p>No services found.</p>'}
         </div>
       `;
     }
@@ -461,21 +462,23 @@
         <div class="admin-list">
           ${(offers || []).map(o => `
             <div class="admin-list-item">
-              <span>${o.title} - Rs. ${Number(o.discounted_price).toLocaleString()}</span>
-              <div>
-                <button class="btn-danger" onclick="deleteOffer(${o.id})">Delete</button>
-              </div>
+              <span><strong>${o.title}</strong> - Rs. ${Number(o.discounted_price).toLocaleString()}</span>
+              <button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button>
             </div>
-          `).join('')}
+          `).join('') || '<p>No offers found.</p>'}
         </div>
       `;
     }
 
     async function addService() {
+      const name = document.getElementById('sName').value;
+      const brand = document.getElementById('sBrand').value;
+      const price = document.getElementById('sPrice').value;
+      if (!name || !brand || !price) { alert('Please fill all required fields'); return; }
       const data = {
-        name: document.getElementById('sName').value,
-        brand: document.getElementById('sBrand').value,
-        price: Number(document.getElementById('sPrice').value),
+        name,
+        brand,
+        price: Number(price),
         discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
         description: document.getElementById('sDescription').value,
         image_url: document.getElementById('sImage').value,
@@ -484,39 +487,42 @@
       };
       const { error } = await supabase.from('products').insert([data]);
       if (error) alert('Error: ' + error.message);
-      else { alert('Service added!'); init(); showServiceList(); }
+      else { alert('✅ Service added successfully!'); init(); showServiceList(); }
     }
 
     async function addOffer() {
+      const title = document.getElementById('oTitle').value;
       const original = Number(document.getElementById('oOriginalPrice').value);
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
+      const expiry = document.getElementById('oExpiry').value;
+      if (!title || !original || !discounted || !expiry) { alert('Please fill all required fields'); return; }
       const data = {
-        title: document.getElementById('oTitle').value,
+        title,
         original_price: original,
         discounted_price: discounted,
         discount_percentage: Math.round(((original - discounted) / original) * 100),
-        expiry_date: document.getElementById('oExpiry').value,
+        expiry_date: expiry,
         description: document.getElementById('oDescription').value,
         image_url: document.getElementById('oImage').value,
         active: true
       };
       const { error } = await supabase.from('offers').insert([data]);
       if (error) alert('Error: ' + error.message);
-      else { alert('Offer added!'); init(); showOfferList(); }
+      else { alert('✅ Offer added successfully!'); init(); showOfferList(); }
     }
 
     async function deleteService(id) {
       if (!confirm('Delete this service?')) return;
       const { error } = await supabase.from('products').delete().eq('id', id);
       if (error) alert('Error: ' + error.message);
-      else { alert('Deleted!'); init(); showServiceList(); }
+      else { alert('✅ Service deleted!'); init(); showServiceList(); }
     }
 
     async function deleteOffer(id) {
       if (!confirm('Delete this offer?')) return;
       const { error } = await supabase.from('offers').delete().eq('id', id);
       if (error) alert('Error: ' + error.message);
-      else { alert('Deleted!'); init(); showOfferList(); }
+      else { alert('✅ Offer deleted!'); init(); showOfferList(); }
     }
 
     function toggleMobileMenu() {
