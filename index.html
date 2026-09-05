@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>ALL Handlers | Premium Laptops at Affordable Prices</title>
-  <meta name="description" content="ALL Handlers offers quality laptops at affordable prices. Shop HP, Dell, Lenovo, ASUS, Apple and more. Best deals, new arrivals, and special offers.">
-  <meta name="keywords" content="laptops, buy laptops, HP laptops, Dell laptops, Lenovo laptops, affordable laptops, gaming laptops, business laptops, used laptops, ALL Handlers">
+  <title>AllHandlers | Professional Web Development & Digital Solutions Agency</title>
+  <meta name="description" content="AllHandlers is a premium digital agency offering web development, UI/UX design, SEO, graphic design & custom software solutions at affordable prices.">
+  <meta name="keywords" content="AllHandlers, web development, website design, graphic design, SEO services, digital agency, UI/UX design, custom software, affordable web development">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
+  <meta name="google-site-verification" content="QoeuWDTxmPK3bMmPbizSktXQCYpdfv310M07ZElDH8g">
+  <meta name="msvalidate.01" content="D4E1D6481133010922C8A237AC9EC696">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="ALL Handlers | Premium Laptops at Affordable Prices">
-  <meta property="og:description" content="Quality laptops at prices that fit your budget. Special offers and WhatsApp direct ordering.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&auto=format">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f172a'/><text x='50%' y='55%' font-size='14' text-anchor='middle' fill='white' font-family='Arial' dy='.1em'>AH</text></svg>">
+  <meta property="og:title" content="AllHandlers | Professional Web Development & Digital Solutions">
+  <meta property="og:description" content="Premium digital agency for web development, UI/UX design, SEO & custom software at affordable prices.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,46 +24,25 @@
       --primary: #0f172a;
       --secondary: #1e293b;
       --accent: #2563eb;
-      --highlight: #f59e0b;
+      --highlight: #06b6d4;
       --bg: #ffffff;
       --surface: #f8fafc;
       --text: #0f172a;
-      --text-light: #64748b;
+      --text-light: #475569;
       --border: #e2e8f0;
       --whatsapp: #25d366;
-      --danger: #ef4444;
-      --success: #10b981;
       --radius: 16px;
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --transition: 0.3s ease;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -69,562 +50,222 @@
       padding: 0.8rem 2rem;
       border-radius: 50px;
       font-weight: 600;
-      font-size: 0.95rem;
       text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: var(--transition);
+      transition: 0.3s;
+      font-size: 0.95rem;
     }
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-    .btn-primary:hover {
-      background: #1d4ed8;
-      transform: translateY(-2px);
-    }
-    .btn-whatsapp {
-      background: var(--whatsapp);
-      color: white;
-    }
-    .btn-whatsapp:hover {
-      background: #1da851;
-      transform: translateY(-2px);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-    .btn-outline:hover {
-      background: var(--accent);
-      color: white;
-    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
+    .btn-whatsapp { background: var(--whatsapp); color: white; }
+    .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+    .btn-outline:hover { background: var(--accent); color: white; }
 
-    /* Navbar */
     .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(255,255,255,0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 0.8rem 0;
     }
-    .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--primary);
-      text-decoration: none;
-    }
-    .logo span {
-      color: var(--accent);
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-    .nav-search {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--surface);
-      border-radius: 50px;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border);
-    }
-    .nav-search input {
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 0.9rem;
-      width: 180px;
-    }
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-    }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; }
+    .nav-links a:hover { color: var(--accent); }
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
 
-    /* Hero */
     .hero {
-      display: flex;
-      align-items: center;
-      min-height: 80vh;
+      display: flex; align-items: center; min-height: 80vh;
       padding: 2rem 0;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      position: relative; overflow: hidden;
     }
-    .hero-content {
-      flex: 1;
-      color: white;
-      padding-right: 2rem;
-    }
-    .hero-content h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-    }
-    .hero-content h1 span {
-      color: var(--highlight);
-    }
-    .hero-content p {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      margin-bottom: 1.5rem;
-      max-width: 500px;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-    .hero-trust {
-      display: flex;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .hero-trust span {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.85rem;
-      color: #94a3b8;
-    }
-    .hero-image {
-      flex: 1;
-      position: relative;
-      min-height: 400px;
-    }
-    .hero-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: var(--radius);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    }
+    .hero-content { flex: 1; color: white; padding-right: 2rem; }
+    .hero-content h1 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .hero-content h1 span { color: var(--highlight); }
+    .hero-content p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-image { flex: 1; min-height: 400px; }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    /* Sections */
-    section {
-      padding: 4rem 0;
-    }
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-    }
+    section { padding: 4rem 0; }
+    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 2rem; }
 
-    /* Sliders */
-    .slider-container {
-      position: relative;
-      overflow: hidden;
-      padding: 0 40px;
-    }
-    .slider-track {
-      display: flex;
-      gap: 1.5rem;
-      transition: transform 0.5s ease;
-    }
+    .slider-container { position: relative; overflow: hidden; padding: 0 40px; }
+    .slider-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease; }
     .slider-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      font-size: 1.2rem;
-      z-index: 10;
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: white; border: 1px solid var(--border); border-radius: 50%;
+      width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;
+      z-index: 10; box-shadow: var(--shadow);
+      display: flex; align-items: center; justify-content: center;
     }
     .slider-btn.prev { left: 0; }
     .slider-btn.next { right: 0; }
 
-    /* Product Cards */
-    .product-card {
-      min-width: 280px;
-      max-width: 280px;
-      background: white;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: var(--transition);
-      border: 1px solid var(--border);
-      flex-shrink: 0;
+    .service-card {
+      min-width: 280px; max-width: 280px; flex-shrink: 0;
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+      border: 1px solid var(--border); transition: 0.3s;
     }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-    }
-    .product-image {
-      position: relative;
-      height: 200px;
-      overflow: hidden;
-    }
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .service-image { height: 180px; overflow: hidden; position: relative; }
+    .service-image img { width: 100%; height: 100%; object-fit: cover; }
     .badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: var(--danger);
-      color: white;
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      position: absolute; top: 10px; left: 10px;
+      background: #ef4444; color: white; padding: 0.3rem 0.8rem;
+      border-radius: 50px; font-size: 0.75rem; font-weight: 600;
     }
-    .badge-offer {
-      background: var(--highlight);
-    }
-    .product-info {
-      padding: 1rem;
-    }
-    .product-info h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-    .product-info .brand {
-      color: var(--text-light);
-      font-size: 0.85rem;
-    }
-    .price-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin: 0.5rem 0;
-    }
-    .original-price {
-      text-decoration: line-through;
-      color: var(--text-light);
-      font-size: 0.85rem;
-    }
-    .current-price {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--accent);
-    }
-    .save-badge {
-      background: #fef3c7;
-      color: #92400e;
-      padding: 0.2rem 0.6rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
+    .badge-offer { background: #f59e0b; }
+    .service-info { padding: 1rem; }
+    .service-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+    .original-price { text-decoration: line-through; color: var(--text-light); font-size: 0.85rem; }
+    .current-price { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+    .save-badge { background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+    .countdown { display: flex; gap: 0.4rem; }
+    .countdown span { background: var(--primary); color: white; padding: 0.3rem 0.6rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; }
 
-    /* Countdown */
-    .countdown {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .countdown span {
-      background: var(--primary);
-      color: white;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .why-card { background: white; border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .why-icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
-    /* WhatsApp Float */
     .whatsapp-float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 200;
-      background: var(--whatsapp);
-      color: white;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      box-shadow: 0 10px 25px rgba(37,211,102,0.4);
-      transition: var(--transition);
-      text-decoration: none;
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: var(--whatsapp); color: white; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37,211,102,0.4);
+      text-decoration: none; transition: 0.3s;
     }
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-    }
+    .whatsapp-float:hover { transform: scale(1.1); }
 
-    /* Admin Modal */
+    footer { background: var(--primary); color: white; padding: 3rem 0; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+    .footer-grid a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    .footer-grid a:hover { color: white; }
+
     .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 300;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: 300; display: none;
+      align-items: center; justify-content: center; padding: 1rem;
     }
-    .modal {
-      background: white;
-      border-radius: var(--radius);
-      padding: 2rem;
-      max-width: 600px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal input, .modal select, .modal textarea {
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 0.8rem;
-      font-family: inherit;
-    }
-
-    /* Why Choose Us */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-    .why-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      text-align: center;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-    .why-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Footer */
-    footer {
-      background: var(--primary);
-      color: white;
-      padding: 3rem 0;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-    }
-    .footer-grid a {
-      color: #94a3b8;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
-    .footer-grid a:hover {
-      color: white;
-    }
+    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal input, .modal select, .modal textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; font-family: inherit; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .mobile-menu-btn { display: block; }
-      .nav-search { display: none; }
       .hero { flex-direction: column; text-align: center; }
       .hero-content { padding-right: 0; }
       .hero-content h1 { font-size: 2.2rem; }
-      .hero-trust { justify-content: center; }
       .hero-image { min-height: 250px; }
       .slider-container { padding: 0 20px; }
-      .product-card { min-width: 240px; max-width: 240px; }
+      .service-card { min-width: 240px; max-width: 240px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="container nav-container">
-      <a href="#" class="logo">ALL<span>Handlers</span></a>
+      <a href="#" class="logo">All<span>Handlers</span></a>
       <div class="nav-links" id="navLinks">
         <a href="#home">Home</a>
-        <a href="#products">Laptops</a>
-        <a href="#categories">Categories</a>
+        <a href="#services">Services</a>
         <a href="#offers">Offers</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <button class="btn btn-primary" onclick="openAdmin()">Admin</button>
       </div>
-      <div class="nav-search">
-        <input type="text" id="searchInput" placeholder="Search laptops..." onkeyup="handleSearch(this.value)">
-        <span>🔍</span>
-      </div>
       <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
     </div>
   </nav>
 
-  <!-- Hero Section -->
   <section class="hero" id="home">
     <div class="container" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
       <div class="hero-content">
-        <h1>Quality Laptops at <span>Affordable Prices</span></h1>
-        <p>Find the perfect laptop for work, study, business, or gaming. Best deals, special offers, and trusted service — all in one place.</p>
+        <h1>Professional Web Development at <span>Affordable Prices</span></h1>
+        <p>AllHandlers delivers premium websites, UI/UX design, SEO, and custom software solutions for businesses and startups worldwide.</p>
         <div class="hero-buttons">
-          <a href="#products" class="btn btn-primary">Shop Laptops</a>
+          <a href="#services" class="btn btn-primary">Our Services</a>
           <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp">💬 Chat on WhatsApp</a>
-        </div>
-        <div class="hero-trust">
-          <span>✅ Quality Products</span>
-          <span>✅ Best Prices</span>
-          <span>✅ Fast Response</span>
         </div>
       </div>
       <div class="hero-image">
-        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&auto=format&fit=crop" alt="Premium laptop for sale at ALL Handlers" loading="eager">
+        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop" alt="AllHandlers web development team" loading="eager">
       </div>
     </div>
   </section>
 
-  <!-- Why Choose Us -->
   <section>
     <div class="container">
-      <h2 class="section-title">Why Choose ALL Handlers?</h2>
-      <p class="section-subtitle">Trusted laptop store with quality products and honest pricing</p>
+      <h2 class="section-title">Why Choose AllHandlers?</h2>
+      <p class="section-subtitle">Trusted digital agency with quality service at fair prices</p>
       <div class="why-grid">
-        <div class="why-card"><div class="why-icon">💰</div><h3>Affordable Prices</h3><p>Quality laptops at prices that fit your budget.</p></div>
-        <div class="why-card"><div class="why-icon">✅</div><h3>Trusted Quality</h3><p>Carefully selected laptops for performance and value.</p></div>
-        <div class="why-card"><div class="why-icon">🖥️</div><h3>Wide Selection</h3><p>Laptops for work, study, business, and gaming.</p></div>
-        <div class="why-card"><div class="why-icon">💬</div><h3>WhatsApp Support</h3><p>Direct contact and fast responses on WhatsApp.</p></div>
-        <div class="why-card"><div class="why-icon">🏷️</div><h3>Best Deals</h3><p>Special prices and limited-time offers.</p></div>
+        <div class="why-card"><div class="why-icon">💰</div><h3>Affordable Pricing</h3><p>Quality web development at prices that fit your budget.</p></div>
+        <div class="why-card"><div class="why-icon">✅</div><h3>Trusted Quality</h3><p>Professional websites built to perform and convert.</p></div>
+        <div class="why-card"><div class="why-icon">🎨</div><h3>Creative Design</h3><p>Beautiful, modern designs that represent your brand.</p></div>
+        <div class="why-card"><div class="why-icon">💬</div><h3>WhatsApp Support</h3><p>Direct communication and fast responses.</p></div>
+        <div class="why-card"><div class="why-icon">🏷️</div><h3>Special Offers</h3><p>Limited-time deals on web development packages.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- Featured Products Slider -->
-  <section id="products">
+  <section id="services">
     <div class="container">
-      <h2 class="section-title">Featured Laptops</h2>
-      <p class="section-subtitle">Handpicked laptops for performance and value</p>
+      <h2 class="section-title">Featured Services</h2>
+      <p class="section-subtitle">Our most popular digital solutions</p>
       <div class="slider-container" id="featuredSlider"></div>
     </div>
   </section>
 
-  <!-- Offers Section -->
   <section id="offers" style="background:var(--surface);">
     <div class="container">
       <h2 class="section-title">Special Offers</h2>
-      <p class="section-subtitle">Limited time deals — grab them before they expire</p>
+      <p class="section-subtitle">Limited time deals on our services</p>
       <div class="slider-container" id="offersSlider"></div>
     </div>
   </section>
 
-  <!-- New Arrivals Slider -->
   <section>
     <div class="container">
-      <h2 class="section-title">New Arrivals</h2>
-      <p class="section-subtitle">Latest laptops added to our store</p>
-      <div class="slider-container" id="newArrivalsSlider"></div>
+      <h2 class="section-title">All Services</h2>
+      <div class="slider-container" id="allServicesSlider"></div>
     </div>
   </section>
 
-  <!-- Popular Products Slider -->
-  <section style="background:var(--surface);">
-    <div class="container">
-      <h2 class="section-title">Popular Laptops</h2>
-      <p class="section-subtitle">Best-selling laptops our customers love</p>
-      <div class="slider-container" id="popularSlider"></div>
-    </div>
-  </section>
-
-  <!-- Categories -->
-  <section id="categories">
-    <div class="container">
-      <h2 class="section-title">Shop by Category</h2>
-      <div class="why-grid" id="categoriesGrid"></div>
-    </div>
-  </section>
-
-  <!-- Brands -->
-  <section style="background:var(--surface);">
-    <div class="container">
-      <h2 class="section-title">Top Brands</h2>
-      <div class="slider-container" id="brandsSlider"></div>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section>
-    <div class="container">
-      <h2 class="section-title">Customer Reviews</h2>
-      <p class="section-subtitle">What our customers say about us</p>
-      <div class="slider-container" id="reviewsSlider"></div>
-    </div>
-  </section>
-
-  <!-- About -->
   <section id="about" style="background:var(--surface);">
     <div class="container" style="max-width:700px;text-align:center;">
-      <h2 class="section-title">About ALL Handlers</h2>
-      <p style="color:var(--text-light);">ALL Handlers is a trusted laptop store offering quality laptops at affordable prices. We provide a wide range of laptops for business, study, gaming, and everyday use. Contact us on WhatsApp for the best deals and fast service.</p>
+      <h2 class="section-title">About AllHandlers</h2>
+      <p style="color:var(--text-light);">AllHandlers is a professional digital agency offering web development, UI/UX design, SEO, graphic design, and custom software solutions at affordable prices. We help businesses establish a strong online presence and grow their brand.</p>
     </div>
   </section>
 
-  <!-- Contact -->
   <section id="contact">
     <div class="container" style="max-width:600px;text-align:center;">
       <h2 class="section-title">Contact Us</h2>
-      <p style="margin-bottom:1rem;color:var(--text-light);">Have a question? Message us directly on WhatsApp!</p>
+      <p style="margin-bottom:1rem;color:var(--text-light);">Have a project? Message us on WhatsApp!</p>
       <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp" style="font-size:1.1rem;">💬 Chat on WhatsApp</a>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h3 style="margin-bottom:0.5rem;">ALL<span style="color:var(--accent);">Handlers</span></h3>
-          <p style="color:#94a3b8;font-size:0.9rem;">Quality laptops at affordable prices. Your trusted laptop store.</p>
+          <h3 style="margin-bottom:0.5rem;">All<span style="color:var(--accent);">Handlers</span></h3>
+          <p style="color:#94a3b8;font-size:0.9rem;">Professional web development & digital solutions at affordable prices.</p>
         </div>
         <div>
           <h4 style="margin-bottom:0.5rem;">Quick Links</h4>
           <a href="#home">Home</a>
-          <a href="#products">Laptops</a>
+          <a href="#services">Services</a>
           <a href="#offers">Offers</a>
           <a href="#contact">Contact</a>
         </div>
@@ -633,20 +274,17 @@
           <a href="https://wa.me/923712245418" target="_blank">💬 WhatsApp: +92 371 2245418</a>
         </div>
       </div>
-      <p style="text-align:center;margin-top:2rem;color:#64748b;font-size:0.85rem;">© 2026 ALL Handlers. All rights reserved.</p>
+      <p style="text-align:center;margin-top:2rem;color:#64748b;font-size:0.85rem;">© 2026 AllHandlers. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- WhatsApp Floating Button -->
   <a href="https://wa.me/923712245418" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">💬</a>
 
-  <!-- Admin Modal -->
   <div class="modal-overlay" id="adminModal">
     <div class="modal">
       <h2 style="margin-bottom:1rem;">Admin Dashboard</h2>
-      <p style="margin-bottom:1rem;color:var(--text-light);">Add products and offers to your store.</p>
       <select id="adminType" onchange="showAdminForm()">
-        <option value="product">Add Product</option>
+        <option value="service">Add Service</option>
         <option value="offer">Add Offer</option>
       </select>
       <div id="adminForm"></div>
@@ -655,79 +293,73 @@
   </div>
 
   <script>
-    // Supabase Configuration
     const SUPABASE_URL = 'https://kfdhijucdkfjpjfxqbfd.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZGhpanVjZGtmanBqZnhxYmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2Mjg4NTksImV4cCI6MjEwNDIwNDg1OX0.xy1-s8DO0NVXbppgHwc7R11RPmWARM-p8mGrjUulSgk';
     const WHATSAPP_NUMBER = '923712245418';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Load products from Supabase
-    async function loadProducts() {
-      const { data: products, error } = await supabase.from('products').select('*');
-      if (error) { console.error(error); return []; }
-      return products || [];
+    async function loadServices() {
+      const { data, error } = await supabase.from('products').select('*');
+      if (error) return [];
+      return data || [];
     }
 
-    // Load offers from Supabase
     async function loadOffers() {
       const now = new Date().toISOString();
-      const { data: offers, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
-      if (error) { console.error(error); return []; }
-      return offers || [];
+      const { data, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
+      if (error) return [];
+      return data || [];
     }
 
-    // Render product card
-    function productCard(p) {
-      const discount = p.discount_price ? Math.round(((p.price - p.discount_price) / p.price) * 100) : 0;
+    function serviceCard(s) {
+      const discount = s.discount_price ? Math.round(((s.price - s.discount_price) / s.price) * 100) : 0;
       return `
-        <div class="product-card">
-          <div class="product-image">
+        <div class="service-card">
+          <div class="service-image">
             ${discount > 0 ? `<span class="badge">SAVE ${discount}%</span>` : ''}
-            <img src="${p.image_url || 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&auto=format'}" alt="${p.name}" loading="lazy">
+            <img src="${s.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${s.name}" loading="lazy">
           </div>
-          <div class="product-info">
-            <h3>${p.name}</h3>
-            <span class="brand">${p.brand}</span>
+          <div class="service-info">
+            <h3>${s.name}</h3>
             <div class="price-row">
-              ${p.discount_price ? `<span class="original-price">Rs. ${Number(p.price).toLocaleString()}</span>` : ''}
-              <span class="current-price">Rs. ${Number(p.discount_price || p.price).toLocaleString()}</span>
+              ${s.discount_price ? `<span class="original-price">Rs. ${Number(s.price).toLocaleString()}</span>` : ''}
+              <span class="current-price">Rs. ${Number(s.discount_price || s.price).toLocaleString()}</span>
             </div>
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${p.name} (${p.brand}) listed for Rs. ${Number(p.discount_price || p.price).toLocaleString()}. Is it available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Order on WhatsApp</a>
+            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${s.name} service for Rs. ${Number(s.discount_price || s.price).toLocaleString()}. Is it available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Get This Service</a>
           </div>
         </div>
       `;
     }
 
-    // Render offer card
     function offerCard(o) {
       const discount = o.discount_percentage || Math.round(((o.original_price - o.discounted_price) / o.original_price) * 100);
       const expiry = new Date(o.expiry_date);
       const now = new Date();
       const diff = expiry - now;
+      if (diff <= 0) return '';
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       return `
-        <div class="product-card">
-          <div class="product-image">
+        <div class="service-card">
+          <div class="service-image">
             <span class="badge badge-offer">SPECIAL OFFER</span>
-            <img src="${o.image_url || 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&auto=format'}" alt="${o.title}" loading="lazy">
+            <img src="${o.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${o.title}" loading="lazy">
           </div>
-          <div class="product-info">
+          <div class="service-info">
             <h3>${o.title}</h3>
             <div class="price-row">
               <span class="original-price">Rs. ${Number(o.original_price).toLocaleString()}</span>
               <span class="current-price">Rs. ${Number(o.discounted_price).toLocaleString()}</span>
               <span class="save-badge">SAVE ${discount}%</span>
             </div>
-            ${diff > 0 ? `<div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>` : '<p style="color:var(--danger);font-size:0.85rem;">Expired</p>'}
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the special offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
+            <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
+            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
           </div>
         </div>
       `;
     }
 
-    // Render slider
     function renderSlider(containerId, items, cardFn) {
       const container = document.getElementById(containerId);
       if (!container || !items.length) { container.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items available.</p>'; return; }
@@ -738,7 +370,6 @@
       `;
     }
 
-    // Slider navigation
     let sliderPositions = {};
     function slideNext(id) {
       const track = document.getElementById(id + '-track');
@@ -757,109 +388,52 @@
       track.style.transform = `translateX(-${sliderPositions[id] * (cards[0].offsetWidth + 24)}px)`;
     }
 
-    // Load all data
     async function init() {
-      const products = await loadProducts();
+      const services = await loadServices();
       const offers = await loadOffers();
-
-      const featured = products.filter(p => p.featured);
-      const newArrivals = products.filter(p => p.new_arrival);
-      const popular = products.filter(p => p.popular);
-      const allProducts = products;
-
-      renderSlider('featuredSlider', featured.length ? featured : allProducts.slice(0, 6), productCard);
+      renderSlider('featuredSlider', services.slice(0, 6), serviceCard);
       renderSlider('offersSlider', offers, offerCard);
-      renderSlider('newArrivalsSlider', newArrivals.length ? newArrivals : allProducts.slice(0, 6), productCard);
-      renderSlider('popularSlider', popular.length ? popular : allProducts.slice(0, 6), productCard);
-
-      // Categories
-      const categories = [
-        {name:'Business Laptops', icon:'💼'},
-        {name:'Gaming Laptops', icon:'🎮'},
-        {name:'Student Laptops', icon:'🎓'},
-        {name:'Budget Laptops', icon:'💰'},
-        {name:'Premium Laptops', icon:'✨'},
-        {name:'Used Laptops', icon:'🔄'},
-      ];
-      document.getElementById('categoriesGrid').innerHTML = categories.map(c => `<div class="why-card"><div class="why-icon">${c.icon}</div><h3>${c.name}</h3></div>`).join('');
-
-      // Brands
-      const brands = ['HP','Dell','Lenovo','ASUS','Acer','Apple','MSI','Microsoft'];
-      renderSlider('brandsSlider', brands.map(b => ({name:b, image_url:''})), b => `<div class="product-card" style="min-width:150px;max-width:150px;"><div class="product-info"><h3 style="text-align:center;">${b.name}</h3></div></div>`);
-
-      // Reviews
-      const reviews = [
-        {name:'Ahmed Raza', rating:5, review:'Great laptops at very affordable prices. Highly recommended!'},
-        {name:'Sara Khan', rating:5, review:'Fast WhatsApp response and quality products. Very satisfied.'},
-        {name:'Usman Ali', rating:4, review:'Good deals and honest pricing. Will buy again.'},
-      ];
-      renderSlider('reviewsSlider', reviews, r => `<div class="product-card" style="min-width:280px;max-width:280px;"><div class="product-info"><p style="font-style:italic;">"${r.review}"</p><strong>— ${r.name}</strong><p>${'⭐'.repeat(r.rating)}</p></div></div>`);
+      renderSlider('allServicesSlider', services, serviceCard);
     }
 
-    // Search
-    async function handleSearch(query) {
-      if (!query) return init();
-      const products = await loadProducts();
-      const filtered = products.filter(p => 
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.brand.toLowerCase().includes(query.toLowerCase()) ||
-        (p.processor && p.processor.toLowerCase().includes(query.toLowerCase()))
-      );
-      renderSlider('featuredSlider', filtered, productCard);
-    }
-
-    // Admin
     function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; showAdminForm(); }
     function closeAdmin() { document.getElementById('adminModal').style.display = 'none'; }
     function showAdminForm() {
       const type = document.getElementById('adminType').value;
       const form = document.getElementById('adminForm');
-      if (type === 'product') {
+      if (type === 'service') {
         form.innerHTML = `
-          <input id="pName" placeholder="Product Name*">
-          <input id="pBrand" placeholder="Brand (HP, Dell, Lenovo...)*">
-          <input id="pPrice" placeholder="Price (Rs.)*" type="number">
-          <input id="pDiscount" placeholder="Discounted Price (optional)" type="number">
-          <input id="pProcessor" placeholder="Processor (e.g., i5 8th Gen)">
-          <input id="pRAM" placeholder="RAM (e.g., 16GB)">
-          <input id="pStorage" placeholder="Storage (e.g., 512GB SSD)">
-          <input id="pImage" placeholder="Image URL">
-          <select id="pFeatured"><option value="false">Not Featured</option><option value="true">Featured</option></select>
-          <select id="pPopular"><option value="false">Not Popular</option><option value="true">Popular</option></select>
-          <select id="pNewArrival"><option value="false">Not New Arrival</option><option value="true">New Arrival</option></select>
-          <button class="btn btn-primary" onclick="addProduct()" style="width:100%;">Add Product</button>
+          <input id="sName" placeholder="Service Name*">
+          <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*">
+          <input id="sPrice" placeholder="Price (Rs.)*" type="number">
+          <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
+          <input id="sImage" placeholder="Image URL">
+          <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>
         `;
       } else {
         form.innerHTML = `
           <input id="oTitle" placeholder="Offer Title*">
-          <input id="oProductId" placeholder="Product ID (optional)" type="number">
           <input id="oOriginalPrice" placeholder="Original Price*" type="number">
           <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
-          <input id="oExpiry" placeholder="Expiry Date (YYYY-MM-DD)*" type="date">
-          <input id="oImage" placeholder="Offer Image URL">
+          <input id="oExpiry" placeholder="Expiry Date*" type="date">
+          <input id="oImage" placeholder="Image URL">
           <button class="btn btn-primary" onclick="addOffer()" style="width:100%;">Add Offer</button>
         `;
       }
     }
 
-    async function addProduct() {
+    async function addService() {
       const data = {
-        name: document.getElementById('pName').value,
-        brand: document.getElementById('pBrand').value,
-        price: Number(document.getElementById('pPrice').value),
-        discount_price: document.getElementById('pDiscount').value ? Number(document.getElementById('pDiscount').value) : null,
-        processor: document.getElementById('pProcessor').value,
-        ram: document.getElementById('pRAM').value,
-        storage: document.getElementById('pStorage').value,
-        image_url: document.getElementById('pImage').value,
-        featured: document.getElementById('pFeatured').value === 'true',
-        popular: document.getElementById('pPopular').value === 'true',
-        new_arrival: document.getElementById('pNewArrival').value === 'true',
+        name: document.getElementById('sName').value,
+        brand: document.getElementById('sBrand').value,
+        price: Number(document.getElementById('sPrice').value),
+        discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
+        image_url: document.getElementById('sImage').value,
         availability: true
       };
       const { error } = await supabase.from('products').insert([data]);
       if (error) alert('Error: ' + error.message);
-      else { alert('Product added!'); closeAdmin(); init(); }
+      else { alert('Service added!'); closeAdmin(); init(); }
     }
 
     async function addOffer() {
@@ -867,7 +441,6 @@
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
       const data = {
         title: document.getElementById('oTitle').value,
-        product_id: document.getElementById('oProductId').value ? Number(document.getElementById('oProductId').value) : null,
         original_price: original,
         discounted_price: discounted,
         discount_percentage: Math.round(((original - discounted) / original) * 100),
@@ -880,7 +453,6 @@
       else { alert('Offer added!'); closeAdmin(); init(); }
     }
 
-    // Mobile menu
     function toggleMobileMenu() {
       const nav = document.getElementById('navLinks');
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
@@ -893,7 +465,6 @@
       nav.style.padding = '1rem';
     }
 
-    // Init
     init();
   </script>
 </body>
