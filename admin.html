@@ -5,266 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AllHandlers Admin Dashboard</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root {
-      --primary: #0f172a;
-      --accent: #2563eb;
-      --danger: #ef4444;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --bg: #f1f5f9;
-      --surface: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --text-light: #64748b;
-    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
-    .admin-header {
-      background: var(--primary);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .admin-header h1 { font-size: 1.3rem; }
-    .admin-header a { color: white; text-decoration: none; font-size: 0.9rem; }
-    .admin-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .tab-btn {
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.85rem;
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      transition: 0.2s;
-    }
-    .tab-btn.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-    .panel {
-      background: var(--surface);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      border: 1px solid var(--border);
-      display: none;
-    }
-    .panel.active { display: block; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 0.3rem; font-size: 0.9rem; }
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.95rem;
-    }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      border-radius: 50px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-success { background: var(--success); color: white; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-    .btn-small { padding: 0.3rem 0.8rem; font-size: 0.75rem; }
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    .table th, .table td {
-      padding: 0.7rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-    .table th { background: var(--bg); font-weight: 600; }
-    .status-badge {
-      padding: 0.2rem 0.6rem;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .status-active { background: #dcfce7; color: #166534; }
-    .status-expired { background: #fef3c7; color: #92400e; }
-    .notification {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      color: white;
-      font-weight: 600;
-      z-index: 2000;
-      display: none;
-    }
+    body { font-family: Arial, sans-serif; background: #f1f5f9; min-height: 100vh; }
     #loginScreen {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 1000;
     }
     .login-box {
-      background: white;
-      border-radius: 16px;
-      padding: 2.5rem;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
+      background: white; border-radius: 16px; padding: 2rem;
+      max-width: 380px; width: 90%; text-align: center;
     }
+    .login-box h2 { margin-bottom: 1rem; color: #0f172a; }
     .login-box input {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      font-size: 1rem;
+      width: 100%; padding: 0.8rem; border: 1px solid #e2e8f0;
+      border-radius: 8px; margin-bottom: 0.8rem; font-size: 1rem;
     }
-    @media (max-width: 768px) {
-      .form-row { grid-template-columns: 1fr; }
-      .admin-container { padding: 1rem; }
-      .table { font-size: 0.75rem; }
+    .login-box button {
+      width: 100%; padding: 0.8rem; background: #2563eb; color: white;
+      border: none; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 1rem;
     }
+    .login-box button:hover { background: #1d4ed8; }
+    #loginError { color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; }
+    #loginSuccess { color: #10b981; font-size: 0.85rem; margin-top: 0.5rem; }
+
+    #adminPanel { display: none; padding: 2rem; max-width: 1000px; margin: 0 auto; }
+    .header { background: #0f172a; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 1.2rem; }
+    .header button { background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; }
+    .tabs { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
+    .tab-btn { padding: 0.6rem 1.2rem; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; background: white; font-weight: 600; }
+    .tab-btn.active { background: #2563eb; color: white; }
+    .panel { display: none; background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0; }
+    .panel.active { display: block; }
+    .form-group { margin-bottom: 0.8rem; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 0.3rem; font-size: 0.85rem; }
+    .form-group input { width: 100%; padding: 0.7rem; border: 1px solid #e2e8f0; border-radius: 8px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn { padding: 0.7rem 1.5rem; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-success { background: #10b981; color: white; }
+    .btn-danger { background: #ef4444; color: white; }
+    .table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+    .table th, .table td { padding: 0.6rem; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; text-align: left; }
+    #notification {
+      position: fixed; top: 1rem; right: 1rem; padding: 1rem 1.5rem;
+      border-radius: 12px; color: white; font-weight: 600; display: none; z-index: 2000;
+    }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-  <!-- Login Screen -->
   <div id="loginScreen">
     <div class="login-box">
       <h2>🔐 Admin Login</h2>
-      <p style="color:var(--text-light);margin-bottom:1rem;">Login with your Supabase admin account</p>
       <input type="email" id="emailInput" placeholder="Email" value="admin@allhandlers.com">
-      <input type="password" id="passwordInput" placeholder="Password" onkeypress="if(event.key==='Enter')login()">
-      <button class="btn btn-primary" onclick="login()" style="width:100%;margin-bottom:0.5rem;">Login</button>
-      <p id="loginError" style="color:var(--danger);font-size:0.85rem;"></p>
+      <input type="password" id="passwordInput" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p id="loginError"></p>
+      <p id="loginSuccess"></p>
     </div>
   </div>
 
-  <!-- Notification -->
-  <div class="notification" id="notification"></div>
+  <div id="notification"></div>
 
-  <!-- Admin Header -->
-  <div id="adminHeader" style="display:none;">
-    <div class="admin-header">
-      <h1>AllHandlers Admin Dashboard</h1>
-      <div>
-        <a href="https://notgamersyt5454-sys.github.io/allhandlers-website/" target="_blank">🌐 View Website</a>
-        <button class="btn btn-danger btn-small" onclick="logout()" style="margin-left:0.5rem;">Logout</button>
-      </div>
+  <div id="adminPanel">
+    <div class="header">
+      <h1>AllHandlers Admin</h1>
+      <button onclick="logout()">Logout</button>
     </div>
 
-    <div class="admin-container">
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('dashboard')">📊 Dashboard</button>
-        <button class="tab-btn" onclick="showTab('services')">🛠️ Services</button>
-        <button class="tab-btn" onclick="showTab('offers')">🏷️ Offers</button>
-        <button class="tab-btn" onclick="showTab('addService')">➕ Add Service</button>
-        <button class="tab-btn" onclick="showTab('addOffer')">➕ Add Offer</button>
-      </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('dashboard')">Dashboard</button>
+      <button class="tab-btn" onclick="showTab('services')">Services</button>
+      <button class="tab-btn" onclick="showTab('offers')">Offers</button>
+      <button class="tab-btn" onclick="showTab('addService')">+ Add Service</button>
+      <button class="tab-btn" onclick="showTab('addOffer')">+ Add Offer</button>
+    </div>
 
-      <div class="panel active" id="panel-dashboard">
-        <h2>Dashboard Overview</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-top:1rem;">
-          <div style="background:var(--surface);padding:1.5rem;border-radius:12px;border:1px solid var(--border);text-align:center;">
-            <h3 style="font-size:2rem;" id="totalServices">0</h3><p>Services</p>
-          </div>
-          <div style="background:var(--surface);padding:1.5rem;border-radius:12px;border:1px solid var(--border);text-align:center;">
-            <h3 style="font-size:2rem;" id="totalOffers">0</h3><p>Offers</p>
-          </div>
-          <div style="background:var(--surface);padding:1.5rem;border-radius:12px;border:1px solid var(--border);text-align:center;">
-            <h3 style="font-size:2rem;color:var(--success);" id="activeOffers">0</h3><p>Active</p>
-          </div>
-          <div style="background:var(--surface);padding:1.5rem;border-radius:12px;border:1px solid var(--border);text-align:center;">
-            <h3 style="font-size:2rem;color:var(--danger);" id="expiredOffers">0</h3><p>Expired</p>
-          </div>
-        </div>
-      </div>
+    <div class="panel active" id="panel-dashboard">
+      <h2>Overview</h2>
+      <p>Services: <strong id="totalServices">0</strong> | Offers: <strong id="totalOffers">0</strong></p>
+    </div>
 
-      <div class="panel" id="panel-services">
-        <h2>Manage Services</h2>
-        <table class="table">
-          <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Action</th></tr></thead>
-          <tbody id="servicesTable"></tbody>
-        </table>
-      </div>
+    <div class="panel" id="panel-services">
+      <h2>Services</h2>
+      <table class="table"><thead><tr><th>Name</th><th>Price</th><th>Action</th></tr></thead><tbody id="servicesTable"></tbody></table>
+    </div>
 
-      <div class="panel" id="panel-offers">
-        <h2>Manage Offers</h2>
-        <table class="table">
-          <thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Action</th></tr></thead>
-          <tbody id="offersTable"></tbody>
-        </table>
-      </div>
+    <div class="panel" id="panel-offers">
+      <h2>Offers</h2>
+      <table class="table"><thead><tr><th>Title</th><th>Price</th><th>Action</th></tr></thead><tbody id="offersTable"></tbody></table>
+    </div>
 
-      <div class="panel" id="panel-addService">
-        <h2>Add New Service</h2>
-        <div class="form-row">
-          <div class="form-group"><label>Service Name*</label><input id="sName"></div>
-          <div class="form-group"><label>Category*</label><input id="sBrand"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Price (Rs.)*</label><input id="sPrice" type="number"></div>
-          <div class="form-group"><label>Discounted Price</label><input id="sDiscount" type="number"></div>
-        </div>
-        <div class="form-group"><label>Image URL</label><input id="sImage"></div>
-        <button class="btn btn-primary" onclick="addService()">Add Service</button>
+    <div class="panel" id="panel-addService">
+      <h2>Add Service</h2>
+      <div class="form-row">
+        <div class="form-group"><label>Name*</label><input id="sName"></div>
+        <div class="form-group"><label>Category*</label><input id="sBrand"></div>
       </div>
+      <div class="form-row">
+        <div class="form-group"><label>Price*</label><input id="sPrice" type="number"></div>
+        <div class="form-group"><label>Discounted Price</label><input id="sDiscount" type="number"></div>
+      </div>
+      <div class="form-group"><label>Image URL</label><input id="sImage"></div>
+      <button class="btn btn-primary" onclick="addService()">Add Service</button>
+    </div>
 
-      <div class="panel" id="panel-addOffer">
-        <h2>Add New Offer</h2>
-        <div class="form-row">
-          <div class="form-group"><label>Offer Title*</label><input id="oTitle"></div>
-          <div class="form-group"><label>Expiry Date*</label><input id="oExpiry" type="date"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Original Price*</label><input id="oOriginalPrice" type="number"></div>
-          <div class="form-group"><label>Discounted Price*</label><input id="oDiscountedPrice" type="number"></div>
-        </div>
-        <div class="form-group"><label>Image URL</label><input id="oImage"></div>
-        <button class="btn btn-success" onclick="addOffer()">Add Offer</button>
+    <div class="panel" id="panel-addOffer">
+      <h2>Add Offer</h2>
+      <div class="form-row">
+        <div class="form-group"><label>Title*</label><input id="oTitle"></div>
+        <div class="form-group"><label>Expiry Date*</label><input id="oExpiry" type="date"></div>
       </div>
+      <div class="form-row">
+        <div class="form-group"><label>Original Price*</label><input id="oOriginalPrice" type="number"></div>
+        <div class="form-group"><label>Discounted Price*</label><input id="oDiscountedPrice" type="number"></div>
+      </div>
+      <div class="form-group"><label>Image URL</label><input id="oImage"></div>
+      <button class="btn btn-success" onclick="addOffer()">Add Offer</button>
     </div>
   </div>
 
@@ -273,9 +134,9 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZGhpanVjZGtmanBqZnhxYmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2Mjg4NTksImV4cCI6MjEwNDIwNDg1OX0.xy1-s8DO0NVXbppgHwc7R11RPmWARM-p8mGrjUulSgk';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    function showNotification(message, type) {
+    function notify(msg, type) {
       const n = document.getElementById('notification');
-      n.textContent = message;
+      n.textContent = msg;
       n.style.background = type === 'success' ? '#10b981' : '#ef4444';
       n.style.display = 'block';
       setTimeout(() => n.style.display = 'none', 3000);
@@ -285,26 +146,27 @@
       const email = document.getElementById('emailInput').value;
       const password = document.getElementById('passwordInput').value;
       document.getElementById('loginError').textContent = '';
+      document.getElementById('loginSuccess').textContent = 'Logging in...';
       
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
       if (error) {
         document.getElementById('loginError').textContent = '❌ ' + error.message;
+        document.getElementById('loginSuccess').textContent = '';
         return;
       }
       
-      if (data.user) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminHeader').style.display = 'block';
-        loadDashboard();
-        showNotification('✅ Login successful!', 'success');
-      }
+      document.getElementById('loginSuccess').textContent = '✅ Success!';
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadDashboard();
+      notify('✅ Login successful!', 'success');
     }
 
     async function logout() {
       await supabase.auth.signOut();
       document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('adminHeader').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'none';
     }
 
     function showTab(tab) {
@@ -320,47 +182,32 @@
     async function loadDashboard() {
       const { data: services } = await supabase.from('products').select('*');
       const { data: offers } = await supabase.from('offers').select('*');
-      const now = new Date();
       document.getElementById('totalServices').textContent = services ? services.length : 0;
       document.getElementById('totalOffers').textContent = offers ? offers.length : 0;
-      document.getElementById('activeOffers').textContent = offers ? offers.filter(o => o.active && new Date(o.expiry_date) > now).length : 0;
-      document.getElementById('expiredOffers').textContent = offers ? offers.filter(o => new Date(o.expiry_date) <= now).length : 0;
     }
 
     async function loadServicesList() {
-      const { data: services } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-      document.getElementById('servicesTable').innerHTML = (services || []).map(s => `
-        <tr><td>${s.name}</td><td>${s.brand || '-'}</td><td>Rs. ${Number(s.price).toLocaleString()}</td>
-        <td><button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button></td></tr>
-      `).join('') || '<tr><td colspan="4">No services.</td></tr>';
+      const { data } = await supabase.from('products').select('*');
+      document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
+        `<tr><td>${s.name}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button class="btn btn-danger" onclick="deleteService(${s.id})">Delete</button></td></tr>`
+      ).join('') || '<tr><td colspan="3">No services.</td></tr>';
     }
 
     async function loadOffersList() {
-      const { data: offers } = await supabase.from('offers').select('*').order('created_at', { ascending: false });
-      const now = new Date();
-      document.getElementById('offersTable').innerHTML = (offers || []).map(o => {
-        const expired = new Date(o.expiry_date) <= now;
-        return `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td>
-        <td>${new Date(o.expiry_date).toLocaleDateString()}</td>
-        <td><span class="status-badge ${expired ? 'status-expired' : 'status-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td>
-        <td><button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`;
-      }).join('') || '<tr><td colspan="5">No offers.</td></tr>';
+      const { data } = await supabase.from('offers').select('*');
+      document.getElementById('offersTable').innerHTML = (data || []).map(o => 
+        `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td><button class="btn btn-danger" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`
+      ).join('') || '<tr><td colspan="3">No offers.</td></tr>';
     }
 
     async function addService() {
       const name = document.getElementById('sName').value;
       const brand = document.getElementById('sBrand').value;
       const price = document.getElementById('sPrice').value;
-      if (!name || !brand || !price) { showNotification('❌ Fill required fields', 'error'); return; }
-      const { error } = await supabase.from('products').insert([{
-        name, brand, price: Number(price),
-        discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
-        image_url: document.getElementById('sImage').value,
-        availability: true
-      }]);
-      if (error) { showNotification('❌ ' + error.message, 'error'); return; }
-      showNotification('✅ Service added!', 'success');
-      loadDashboard();
+      if (!name || !brand || !price) { notify('❌ Fill required fields', 'error'); return; }
+      const { error } = await supabase.from('products').insert([{name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value}]);
+      if (error) { notify('❌ ' + error.message, 'error'); return; }
+      notify('✅ Service added!', 'success');
     }
 
     async function addOffer() {
@@ -368,41 +215,25 @@
       const original = Number(document.getElementById('oOriginalPrice').value);
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
       const expiry = document.getElementById('oExpiry').value;
-      if (!title || !original || !discounted || !expiry) { showNotification('❌ Fill required fields', 'error'); return; }
-      const { error } = await supabase.from('offers').insert([{
-        title, original_price: original, discounted_price: discounted,
-        discount_percentage: Math.round(((original - discounted) / original) * 100),
-        expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true
-      }]);
-      if (error) { showNotification('❌ ' + error.message, 'error'); return; }
-      showNotification('✅ Offer added!', 'success');
-      loadDashboard();
+      if (!title || !original || !discounted || !expiry) { notify('❌ Fill required fields', 'error'); return; }
+      const { error } = await supabase.from('offers').insert([{title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true}]);
+      if (error) { notify('❌ ' + error.message, 'error'); return; }
+      notify('✅ Offer added!', 'success');
     }
 
     async function deleteService(id) {
       if (!confirm('Delete?')) return;
       await supabase.from('products').delete().eq('id', id);
-      showNotification('✅ Deleted!', 'success');
+      notify('✅ Deleted!', 'success');
       loadServicesList();
-      loadDashboard();
     }
 
     async function deleteOffer(id) {
       if (!confirm('Delete?')) return;
       await supabase.from('offers').delete().eq('id', id);
-      showNotification('✅ Deleted!', 'success');
+      notify('✅ Deleted!', 'success');
       loadOffersList();
-      loadDashboard();
     }
-
-    // Check if already logged in
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminHeader').style.display = 'block';
-        loadDashboard();
-      }
-    });
   </script>
 </body>
 </html>
