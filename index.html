@@ -5,16 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AllHandlers | Professional Web Development & Digital Solutions Agency</title>
   <meta name="description" content="AllHandlers is a premium digital agency offering web development, UI/UX design, SEO, graphic design & custom software solutions at affordable prices.">
-  <meta name="keywords" content="AllHandlers, web development, website design, graphic design, SEO services, digital agency, UI/UX design, custom software, affordable web development">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
-  <meta name="google-site-verification" content="QoeuWDTxmPK3bMmPbizSktXQCYpdfv310M07ZElDH8g">
-  <meta name="msvalidate.01" content="D4E1D6481133010922C8A237AC9EC696">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AllHandlers | Professional Web Development & Digital Solutions">
-  <meta property="og:description" content="Premium digital agency for web development, UI/UX design, SEO & custom software at affordable prices.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,7 +15,6 @@
   <style>
     :root {
       --primary: #0f172a;
-      --secondary: #1e293b;
       --accent: #2563eb;
       --highlight: #06b6d4;
       --bg: #ffffff;
@@ -59,14 +51,11 @@
       font-size: 0.95rem;
     }
     .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
     .btn-whatsapp { background: var(--whatsapp); color: white; }
-    .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
     .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-    .btn-outline:hover { background: var(--accent); color: white; }
     .btn-danger { background: var(--danger); color: white; }
     .btn-success { background: var(--success); color: white; }
-    .btn-small { padding: 0.4rem 1rem; font-size: 0.8rem; }
+    .btn-small { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
 
     .navbar {
       position: sticky; top: 0; z-index: 100;
@@ -75,29 +64,27 @@
       border-bottom: 1px solid var(--border);
       padding: 0.8rem 0;
     }
-    .nav-container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
     .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
     .logo span { color: var(--accent); }
-    .nav-links { display: flex; gap: 1.2rem; align-items: center; }
+    .nav-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
     .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; }
     .nav-links a:hover { color: var(--accent); }
-    .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; }
 
     .hero {
-      display: flex; align-items: center; min-height: 80vh;
+      display: flex; align-items: center; min-height: 70vh;
       padding: 2rem 0;
       background: linear-gradient(135deg, #0f172a, #1e293b);
-      position: relative; overflow: hidden;
     }
     .hero-content { flex: 1; color: white; padding-right: 2rem; }
-    .hero-content h1 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .hero-content h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
     .hero-content h1 span { color: var(--highlight); }
     .hero-content p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem; }
     .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-image { flex: 1; min-height: 400px; }
+    .hero-image { flex: 1; min-height: 350px; }
     .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    section { padding: 4rem 0; }
+    section { padding: 3.5rem 0; }
     .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
     .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 2rem; }
 
@@ -119,7 +106,7 @@
       box-shadow: var(--shadow); overflow: hidden;
       border: 1px solid var(--border); transition: 0.3s;
     }
-    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .service-card:hover { transform: translateY(-6px); }
     .service-image { height: 180px; overflow: hidden; position: relative; }
     .service-image img { width: 100%; height: 100%; object-fit: cover; }
     .badge {
@@ -130,7 +117,7 @@
     .badge-offer { background: #f59e0b; }
     .service-info { padding: 1rem; }
     .service-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+    .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; }
     .original-price { text-decoration: line-through; color: var(--text-light); font-size: 0.85rem; }
     .current-price { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
     .save-badge { background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
@@ -146,31 +133,30 @@
       background: var(--whatsapp); color: white; width: 56px; height: 56px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37,211,102,0.4);
-      text-decoration: none; transition: 0.3s;
+      text-decoration: none;
     }
-    .whatsapp-float:hover { transform: scale(1.1); }
 
-    footer { background: var(--primary); color: white; padding: 3rem 0; }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-    .footer-grid a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 0.5rem; font-size: 0.9rem; }
-    .footer-grid a:hover { color: white; }
+    footer { background: var(--primary); color: white; padding: 3rem 0; text-align: center; }
+    footer a { color: #94a3b8; text-decoration: none; }
 
-    .modal-overlay {
+    /* Admin Modal - SIMPLIFIED */
+    #adminModal {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); z-index: 300; display: none;
+      background: rgba(0,0,0,0.7); z-index: 999;
+      display: none;
       align-items: center; justify-content: center; padding: 1rem;
     }
-    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    #adminModal.open { display: flex !important; }
+    .modal { background: white; border-radius: var(--radius); padding: 2rem; max-width: 600px; width: 100%; max-height: 85vh; overflow-y: auto; }
     .modal input, .modal select, .modal textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; font-family: inherit; }
-    .admin-list { margin-bottom: 1rem; }
     .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 0.5rem; }
+    .modal-buttons { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
       .hero { flex-direction: column; text-align: center; }
       .hero-content { padding-right: 0; }
-      .hero-content h1 { font-size: 2.2rem; }
+      .hero-content h1 { font-size: 2rem; }
       .hero-image { min-height: 250px; }
       .slider-container { padding: 0 20px; }
       .service-card { min-width: 240px; max-width: 240px; }
@@ -182,15 +168,14 @@
   <nav class="navbar">
     <div class="container nav-container">
       <a href="#" class="logo">All<span>Handlers</span></a>
-      <div class="nav-links" id="navLinks">
+      <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#services">Services</a>
         <a href="#offers">Offers</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
+        <button class="btn btn-primary btn-small" onclick="document.getElementById('adminModal').classList.add('open'); showAddService();">Admin</button>
       </div>
-      <button class="btn btn-primary btn-small" onclick="openAdmin()">Admin</button>
-      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
     </div>
   </nav>
 
@@ -250,7 +235,7 @@
   <section id="about" style="background:var(--surface);">
     <div class="container" style="max-width:700px;text-align:center;">
       <h2 class="section-title">About AllHandlers</h2>
-      <p style="color:var(--text-light);">AllHandlers is a professional digital agency offering web development, UI/UX design, SEO, graphic design, and custom software solutions at affordable prices. We help businesses establish a strong online presence and grow their brand.</p>
+      <p style="color:var(--text-light);">AllHandlers is a professional digital agency offering web development, UI/UX design, SEO, graphic design, and custom software solutions at affordable prices.</p>
     </div>
   </section>
 
@@ -264,40 +249,26 @@
 
   <footer>
     <div class="container">
-      <div class="footer-grid">
-        <div>
-          <h3 style="margin-bottom:0.5rem;">All<span style="color:var(--accent);">Handlers</span></h3>
-          <p style="color:#94a3b8;font-size:0.9rem;">Professional web development & digital solutions at affordable prices.</p>
-        </div>
-        <div>
-          <h4 style="margin-bottom:0.5rem;">Quick Links</h4>
-          <a href="#home">Home</a>
-          <a href="#services">Services</a>
-          <a href="#offers">Offers</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <div>
-          <h4 style="margin-bottom:0.5rem;">Contact</h4>
-          <a href="https://wa.me/923712245418" target="_blank">💬 WhatsApp: +92 371 2245418</a>
-        </div>
-      </div>
-      <p style="text-align:center;margin-top:2rem;color:#64748b;font-size:0.85rem;">© 2026 AllHandlers. All rights reserved.</p>
+      <h3 style="margin-bottom:0.5rem;">AllHandlers</h3>
+      <p style="color:#94a3b8;font-size:0.9rem;">Professional web development & digital solutions.</p>
+      <p style="margin-top:1rem;font-size:0.85rem;">© 2026 AllHandlers. All rights reserved.</p>
     </div>
   </footer>
 
   <a href="https://wa.me/923712245418" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">💬</a>
 
-  <div class="modal-overlay" id="adminModal" onclick="if(event.target===this)closeAdmin()">
+  <!-- ADMIN MODAL - SIMPLE VERSION -->
+  <div id="adminModal">
     <div class="modal">
       <h2 style="margin-bottom:1rem;">Admin Dashboard</h2>
-      <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+      <div class="modal-buttons">
         <button class="btn btn-primary btn-small" onclick="showAddService()">+ Add Service</button>
         <button class="btn btn-success btn-small" onclick="showAddOffer()">+ Add Offer</button>
         <button class="btn btn-outline btn-small" onclick="showServiceList()">View Services</button>
         <button class="btn btn-outline btn-small" onclick="showOfferList()">View Offers</button>
       </div>
       <div id="adminContent"></div>
-      <button class="btn btn-danger" onclick="closeAdmin()" style="margin-top:1rem;width:100%;">Close</button>
+      <button class="btn btn-danger" onclick="document.getElementById('adminModal').classList.remove('open')" style="margin-top:1rem;width:100%;">Close</button>
     </div>
   </div>
 
@@ -309,92 +280,76 @@
 
     async function loadServices() {
       const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-      if (error) { console.error(error); return []; }
       return data || [];
     }
 
     async function loadOffers() {
       const now = new Date().toISOString();
       const { data, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
-      if (error) { console.error(error); return []; }
       return data || [];
     }
 
     function serviceCard(s) {
       const discount = s.discount_price ? Math.round(((s.price - s.discount_price) / s.price) * 100) : 0;
-      return `
-        <div class="service-card">
-          <div class="service-image">
-            ${discount > 0 ? `<span class="badge">SAVE ${discount}%</span>` : ''}
-            <img src="${s.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${s.name}" loading="lazy">
-          </div>
-          <div class="service-info">
-            <h3>${s.name}</h3>
-            <span style="font-size:0.85rem;color:var(--text-light);">${s.brand || 'Service'}</span>
-            <div class="price-row">
-              ${s.discount_price ? `<span class="original-price">Rs. ${Number(s.price).toLocaleString()}</span>` : ''}
-              <span class="current-price">Rs. ${Number(s.discount_price || s.price).toLocaleString()}</span>
-            </div>
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${s.name} service for Rs. ${Number(s.discount_price || s.price).toLocaleString()}. Is it available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Get This Service</a>
-          </div>
+      return `<div class="service-card">
+        <div class="service-image">
+          ${discount > 0 ? `<span class="badge">SAVE ${discount}%</span>` : ''}
+          <img src="${s.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${s.name}" loading="lazy">
         </div>
-      `;
+        <div class="service-info">
+          <h3>${s.name}</h3>
+          <span style="font-size:0.85rem;color:var(--text-light);">${s.brand || 'Service'}</span>
+          <div class="price-row">
+            ${s.discount_price ? `<span class="original-price">Rs. ${Number(s.price).toLocaleString()}</span>` : ''}
+            <span class="current-price">Rs. ${Number(s.discount_price || s.price).toLocaleString()}</span>
+          </div>
+          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${s.name} service for Rs. ${Number(s.discount_price || s.price).toLocaleString()}. Is it available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Get This Service</a>
+        </div>
+      </div>`;
     }
 
     function offerCard(o) {
       const discount = o.discount_percentage || Math.round(((o.original_price - o.discounted_price) / o.original_price) * 100);
-      const expiry = new Date(o.expiry_date);
-      const now = new Date();
-      const diff = expiry - now;
+      const diff = new Date(o.expiry_date) - new Date();
       if (diff <= 0) return '';
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      return `
-        <div class="service-card">
-          <div class="service-image">
-            <span class="badge badge-offer">SPECIAL OFFER</span>
-            <img src="${o.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${o.title}" loading="lazy">
-          </div>
-          <div class="service-info">
-            <h3>${o.title}</h3>
-            <div class="price-row">
-              <span class="original-price">Rs. ${Number(o.original_price).toLocaleString()}</span>
-              <span class="current-price">Rs. ${Number(o.discounted_price).toLocaleString()}</span>
-              <span class="save-badge">SAVE ${discount}%</span>
-            </div>
-            <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
-          </div>
+      return `<div class="service-card">
+        <div class="service-image">
+          <span class="badge badge-offer">SPECIAL OFFER</span>
+          <img src="${o.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${o.title}" loading="lazy">
         </div>
-      `;
+        <div class="service-info">
+          <h3>${o.title}</h3>
+          <div class="price-row">
+            <span class="original-price">Rs. ${Number(o.original_price).toLocaleString()}</span>
+            <span class="current-price">Rs. ${Number(o.discounted_price).toLocaleString()}</span>
+            <span class="save-badge">SAVE ${discount}%</span>
+          </div>
+          <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
+          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
+        </div>
+      </div>`;
     }
 
-    function renderSlider(containerId, items, cardFn) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      if (!items.length) { container.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items available. Add services from Admin panel.</p>'; return; }
-      container.innerHTML = `
-        <button class="slider-btn prev" onclick="slidePrev('${containerId}')">‹</button>
-        <div class="slider-track" id="${containerId}-track">${items.map(cardFn).join('')}</div>
-        <button class="slider-btn next" onclick="slideNext('${containerId}')">›</button>
-      `;
+    function renderSlider(id, items, fn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!items.length) { el.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items yet. Add from Admin panel.</p>'; return; }
+      el.innerHTML = `<button class="slider-btn prev" onclick="slide('${id}', -1)">‹</button>
+        <div class="slider-track" id="${id}-track">${items.map(fn).join('')}</div>
+        <button class="slider-btn next" onclick="slide('${id}', 1)">›</button>`;
     }
 
-    let sliderPositions = {};
-    function slideNext(id) {
+    let positions = {};
+    function slide(id, dir) {
       const track = document.getElementById(id + '-track');
       if (!track || !track.children.length) return;
-      sliderPositions[id] = (sliderPositions[id] || 0) + 1;
-      if (sliderPositions[id] >= track.children.length) sliderPositions[id] = 0;
-      track.style.transform = `translateX(-${sliderPositions[id] * (track.children[0].offsetWidth + 24)}px)`;
-    }
-    function slidePrev(id) {
-      const track = document.getElementById(id + '-track');
-      if (!track || !track.children.length) return;
-      sliderPositions[id] = (sliderPositions[id] || 0) - 1;
-      if (sliderPositions[id] < 0) sliderPositions[id] = track.children.length - 1;
-      track.style.transform = `translateX(-${sliderPositions[id] * (track.children[0].offsetWidth + 24)}px)`;
+      positions[id] = (positions[id] || 0) + dir;
+      if (positions[id] < 0) positions[id] = track.children.length - 1;
+      if (positions[id] >= track.children.length) positions[id] = 0;
+      track.style.transform = `translateX(-${positions[id] * (track.children[0].offsetWidth + 24)}px)`;
     }
 
     async function init() {
@@ -405,89 +360,51 @@
       renderSlider('allServicesSlider', services, serviceCard);
     }
 
-    function openAdmin() {
-      document.getElementById('adminModal').style.display = 'flex';
-      showAddService();
-    }
-    function closeAdmin() {
-      document.getElementById('adminModal').style.display = 'none';
-    }
-
     function showAddService() {
       document.getElementById('adminContent').innerHTML = `
         <h3>Add New Service</h3>
-        <input id="sName" placeholder="Service Name*" required>
-        <input id="sBrand" placeholder="Category (Web Dev, SEO, Design...)*" required>
-        <input id="sPrice" placeholder="Price (Rs.)*" type="number" required>
+        <input id="sName" placeholder="Service Name*">
+        <input id="sBrand" placeholder="Category*">
+        <input id="sPrice" placeholder="Price (Rs.)*" type="number">
         <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
-        <input id="sDescription" placeholder="Description">
-        <input id="sImage" placeholder="Image URL">
-        <select id="sFeatured"><option value="false">Not Featured</option><option value="true">Featured</option></select>
-        <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>
-      `;
+        <input id="sImage" placeholder="Image URL (optional)">
+        <button class="btn btn-primary" onclick="addService()" style="width:100%;">Add Service</button>`;
     }
 
     function showAddOffer() {
       document.getElementById('adminContent').innerHTML = `
         <h3>Add New Offer</h3>
-        <input id="oTitle" placeholder="Offer Title*" required>
-        <input id="oOriginalPrice" placeholder="Original Price*" type="number" required>
-        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number" required>
-        <input id="oExpiry" placeholder="Expiry Date*" type="date" required>
-        <input id="oDescription" placeholder="Description">
-        <input id="oImage" placeholder="Image URL">
-        <button class="btn btn-success" onclick="addOffer()" style="width:100%;">Add Offer</button>
-      `;
+        <input id="oTitle" placeholder="Offer Title*">
+        <input id="oOriginalPrice" placeholder="Original Price*" type="number">
+        <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
+        <input id="oExpiry" placeholder="Expiry Date*" type="date">
+        <input id="oImage" placeholder="Image URL (optional)">
+        <button class="btn btn-success" onclick="addOffer()" style="width:100%;">Add Offer</button>`;
     }
 
     async function showServiceList() {
       const services = await loadServices();
       document.getElementById('adminContent').innerHTML = `
-        <h3>Manage Services (${services.length})</h3>
-        <div class="admin-list">
-          ${services.map(s => `
-            <div class="admin-list-item">
-              <span><strong>${s.name}</strong> - Rs. ${Number(s.price).toLocaleString()}</span>
-              <button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button>
-            </div>
-          `).join('') || '<p>No services found.</p>'}
-        </div>
-      `;
+        <h3>Services (${services.length})</h3>
+        ${services.map(s => `<div class="admin-list-item"><span><strong>${s.name}</strong> - Rs. ${Number(s.price).toLocaleString()}</span><button class="btn btn-danger btn-small" onclick="delService(${s.id})">Delete</button></div>`).join('') || '<p>No services.</p>'}`;
     }
 
     async function showOfferList() {
-      const { data: offers } = await supabase.from('offers').select('*').order('created_at', { ascending: false });
+      const { data: offers } = await supabase.from('offers').select('*');
       document.getElementById('adminContent').innerHTML = `
-        <h3>Manage Offers (${offers ? offers.length : 0})</h3>
-        <div class="admin-list">
-          ${(offers || []).map(o => `
-            <div class="admin-list-item">
-              <span><strong>${o.title}</strong> - Rs. ${Number(o.discounted_price).toLocaleString()}</span>
-              <button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button>
-            </div>
-          `).join('') || '<p>No offers found.</p>'}
-        </div>
-      `;
+        <h3>Offers (${offers ? offers.length : 0})</h3>
+        ${(offers || []).map(o => `<div class="admin-list-item"><span><strong>${o.title}</strong> - Rs. ${Number(o.discounted_price).toLocaleString()}</span><button class="btn btn-danger btn-small" onclick="delOffer(${o.id})">Delete</button></div>`).join('') || '<p>No offers.</p>'}`;
     }
 
     async function addService() {
       const name = document.getElementById('sName').value;
       const brand = document.getElementById('sBrand').value;
       const price = document.getElementById('sPrice').value;
-      if (!name || !brand || !price) { alert('Please fill all required fields'); return; }
-      const data = {
-        name,
-        brand,
-        price: Number(price),
-        discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
-        description: document.getElementById('sDescription').value,
-        image_url: document.getElementById('sImage').value,
-        featured: document.getElementById('sFeatured').value === 'true',
-        availability: true
-      };
-      const { error } = await supabase.from('products').insert([data]);
-      if (error) alert('Error: ' + error.message);
-      else { alert('✅ Service added successfully!'); init(); showServiceList(); }
+      if (!name || !brand || !price) { alert('Fill all required fields'); return; }
+      await supabase.from('products').insert([{name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value, availability: true}]);
+      alert('✅ Service added!');
+      init();
+      showServiceList();
     }
 
     async function addOffer() {
@@ -495,46 +412,27 @@
       const original = Number(document.getElementById('oOriginalPrice').value);
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
       const expiry = document.getElementById('oExpiry').value;
-      if (!title || !original || !discounted || !expiry) { alert('Please fill all required fields'); return; }
-      const data = {
-        title,
-        original_price: original,
-        discounted_price: discounted,
-        discount_percentage: Math.round(((original - discounted) / original) * 100),
-        expiry_date: expiry,
-        description: document.getElementById('oDescription').value,
-        image_url: document.getElementById('oImage').value,
-        active: true
-      };
-      const { error } = await supabase.from('offers').insert([data]);
-      if (error) alert('Error: ' + error.message);
-      else { alert('✅ Offer added successfully!'); init(); showOfferList(); }
+      if (!title || !original || !discounted || !expiry) { alert('Fill all required fields'); return; }
+      await supabase.from('offers').insert([{title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original - discounted) / original) * 100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true}]);
+      alert('✅ Offer added!');
+      init();
+      showOfferList();
     }
 
-    async function deleteService(id) {
-      if (!confirm('Delete this service?')) return;
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      if (error) alert('Error: ' + error.message);
-      else { alert('✅ Service deleted!'); init(); showServiceList(); }
+    async function delService(id) {
+      if (!confirm('Delete?')) return;
+      await supabase.from('products').delete().eq('id', id);
+      alert('✅ Deleted!');
+      init();
+      showServiceList();
     }
 
-    async function deleteOffer(id) {
-      if (!confirm('Delete this offer?')) return;
-      const { error } = await supabase.from('offers').delete().eq('id', id);
-      if (error) alert('Error: ' + error.message);
-      else { alert('✅ Offer deleted!'); init(); showOfferList(); }
-    }
-
-    function toggleMobileMenu() {
-      const nav = document.getElementById('navLinks');
-      nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-      nav.style.flexDirection = 'column';
-      nav.style.position = 'absolute';
-      nav.style.top = '60px';
-      nav.style.left = '0';
-      nav.style.width = '100%';
-      nav.style.background = 'white';
-      nav.style.padding = '1rem';
+    async function delOffer(id) {
+      if (!confirm('Delete?')) return;
+      await supabase.from('offers').delete().eq('id', id);
+      alert('✅ Deleted!');
+      init();
+      showOfferList();
     }
 
     init();
