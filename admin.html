@@ -86,6 +86,7 @@
     .btn-primary { background: var(--accent); color: white; }
     .btn-success { background: var(--success); color: white; }
     .btn-danger { background: var(--danger); color: white; }
+    .btn-warning { background: var(--warning); color: white; }
     .btn-small { padding: 0.4rem 1rem; font-size: 0.8rem; }
     
     .table { width: 100%; border-collapse: collapse; }
@@ -133,10 +134,8 @@
     <div class="sidebar">
       <h2>All<span>Handlers</span></h2>
       <a class="active" onclick="showSection('dashboard')">📊 Dashboard</a>
-      <a onclick="showSection('addService')">➕ Add Service</a>
-      <a onclick="showSection('addOffer')">🏷️ Add Offer</a>
-      <a onclick="showSection('services')">🛠️ Services</a>
-      <a onclick="showSection('offers')">🎯 Offers</a>
+      <a onclick="showSection('addOffer')">➕ Add Offer</a>
+      <a onclick="showSection('offers')">🎯 Manage Offers</a>
       <a onclick="showSection('queries')">📩 Queries <span class="badge-count" id="queryCount">0</span></a>
     </div>
 
@@ -152,26 +151,11 @@
       <div class="panel active" id="section-dashboard">
         <h2>Overview</h2>
         <div class="stats-grid">
-          <div class="stat-card"><h3 id="totalServices">0</h3><p>Services</p></div>
-          <div class="stat-card"><h3 id="totalOffers">0</h3><p>Offers</p></div>
+          <div class="stat-card"><h3 id="totalOffers">0</h3><p>Total Offers</p></div>
           <div class="stat-card"><h3 id="totalQueries">0</h3><p>Queries</p></div>
-          <div class="stat-card"><h3 style="color:var(--danger);" id="newQueries">0</h3><p>New Queries</p></div>
+          <div class="stat-card"><h3 style="color:var(--success);" id="activeOffers">0</h3><p>Active Offers</p></div>
+          <div class="stat-card"><h3 style="color:var(--danger);" id="expiredOffers">0</h3><p>Expired Offers</p></div>
         </div>
-      </div>
-
-      <div class="panel" id="section-addService">
-        <h2>Add New Service</h2>
-        <div class="form-row">
-          <div class="form-group"><label>Service Name*</label><input id="sName"></div>
-          <div class="form-group"><label>Category*</label><input id="sBrand"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label>Price (Rs.)*</label><input id="sPrice" type="number"></div>
-          <div class="form-group"><label>Discounted Price</label><input id="sDiscount" type="number"></div>
-        </div>
-        <div class="form-group"><label>Description</label><textarea id="sDescription" rows="3"></textarea></div>
-        <div class="form-group"><label>Image URL</label><input id="sImage"></div>
-        <button class="btn btn-primary" onclick="addService()">Add Service</button>
       </div>
 
       <div class="panel" id="section-addOffer">
@@ -189,14 +173,12 @@
         <button class="btn btn-success" onclick="addOffer()">Add Offer</button>
       </div>
 
-      <div class="panel" id="section-services">
-        <h2>Manage Services</h2>
-        <table class="table"><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="servicesTable"></tbody></table>
-      </div>
-
       <div class="panel" id="section-offers">
         <h2>Manage Offers</h2>
-        <table class="table"><thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody id="offersTable"></tbody></table>
+        <table class="table">
+          <thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="offersTable"></tbody>
+        </table>
       </div>
 
       <div class="panel" id="section-queries">
@@ -261,6 +243,14 @@
       });
     }
 
+    async function apiUpdate(table, id, data) {
+      await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+    }
+
     async function apiDelete(table, id) {
       await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
         method: 'DELETE',
@@ -273,30 +263,21 @@
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('section-' + section).classList.add('active');
       event.target.classList.add('active');
-      const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Services', offers:'Offers', queries:'Queries'};
+      const titles = {dashboard:'Dashboard', addOffer:'Add Offer', offers:'Manage Offers', queries:'Queries'};
       document.getElementById('pageTitle').textContent = titles[section];
-      if (section === 'services') loadServicesList();
       if (section === 'offers') loadOffersList();
       if (section === 'queries') loadQueries();
       if (section === 'dashboard') loadDashboard();
     }
 
     async function loadDashboard() {
-      const services = await apiQuery('products');
       const offers = await apiQuery('offers');
       const queries = await apiQuery('queries');
       const now = new Date();
-      document.getElementById('totalServices').textContent = services.length || 0;
       document.getElementById('totalOffers').textContent = offers.length || 0;
       document.getElementById('totalQueries').textContent = queries.length || 0;
-      document.getElementById('newQueries').textContent = queries.filter(q => q.status === 'new').length || 0;
-    }
-
-    async function loadServicesList() {
-      const data = await apiQuery('products');
-      document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
-        `<tr><td>${s.name}</td><td>${s.brand || '-'}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button></td></tr>`
-      ).join('') || '<tr><td colspan="4">No services</td></tr>';
+      document.getElementById('activeOffers').textContent = offers.filter(o => o.active && new Date(o.expiry_date) > now).length || 0;
+      document.getElementById('expiredOffers').textContent = offers.filter(o => new Date(o.expiry_date) <= now).length || 0;
     }
 
     async function loadOffersList() {
@@ -304,7 +285,16 @@
       const now = new Date();
       document.getElementById('offersTable').innerHTML = (data || []).map(o => {
         const expired = new Date(o.expiry_date) <= now;
-        return `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td>${new Date(o.expiry_date).toLocaleDateString()}</td><td><span class="badge ${expired ? 'badge-expired' : 'badge-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td><td><button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`;
+        return `<tr>
+          <td>${o.title}</td>
+          <td>Rs. ${Number(o.discounted_price).toLocaleString()}</td>
+          <td>${new Date(o.expiry_date).toLocaleDateString()}</td>
+          <td><span class="badge ${expired ? 'badge-expired' : 'badge-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td>
+          <td>
+            <button class="btn btn-warning btn-small" onclick="editOffer(${o.id})">Edit</button>
+            <button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button>
+          </td>
+        </tr>`;
       }).join('') || '<tr><td colspan="5">No offers</td></tr>';
     }
 
@@ -322,15 +312,6 @@
       `).join('') || '<p>No queries yet.</p>';
     }
 
-    async function addService() {
-      const name = document.getElementById('sName').value;
-      const brand = document.getElementById('sBrand').value;
-      const price = document.getElementById('sPrice').value;
-      if (!name || !brand || !price) { notify('❌ Fill required fields', '#ef4444'); return; }
-      await apiInsert('products', {name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, description: document.getElementById('sDescription').value, image_url: document.getElementById('sImage').value, availability: true});
-      notify('✅ Service added!', '#10b981');
-    }
-
     async function addOffer() {
       const title = document.getElementById('oTitle').value;
       const original = Number(document.getElementById('oOriginalPrice').value);
@@ -339,18 +320,46 @@
       if (!title || !original || !discounted || !expiry) { notify('❌ Fill required fields', '#ef4444'); return; }
       await apiInsert('offers', {title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, description: document.getElementById('oDescription').value, image_url: document.getElementById('oImage').value, active: true});
       notify('✅ Offer added!', '#10b981');
+      document.getElementById('oTitle').value = '';
+      document.getElementById('oOriginalPrice').value = '';
+      document.getElementById('oDiscountedPrice').value = '';
+      document.getElementById('oExpiry').value = '';
+      document.getElementById('oDescription').value = '';
+      document.getElementById('oImage').value = '';
     }
 
-    async function deleteService(id) {
-      if (!confirm('Delete?')) return;
-      await apiDelete('products', id);
-      notify('✅ Deleted!', '#10b981');
-      loadServicesList();
+    async function editOffer(id) {
+      const offers = await apiQuery('offers');
+      const offer = offers.find(o => o.id === id);
+      if (!offer) return;
+      showSection('addOffer');
+      document.getElementById('oTitle').value = offer.title;
+      document.getElementById('oOriginalPrice').value = offer.original_price;
+      document.getElementById('oDiscountedPrice').value = offer.discounted_price;
+      document.getElementById('oExpiry').value = new Date(offer.expiry_date).toISOString().split('T')[0];
+      document.getElementById('oDescription').value = offer.description || '';
+      document.getElementById('oImage').value = offer.image_url || '';
+      document.getElementById('pageTitle').textContent = 'Edit Offer';
+      document.getElementById('section-addOffer').querySelector('button').onclick = () => updateOffer(id);
+      document.getElementById('section-addOffer').querySelector('button').textContent = 'Update Offer';
+    }
+
+    async function updateOffer(id) {
+      const title = document.getElementById('oTitle').value;
+      const original = Number(document.getElementById('oOriginalPrice').value);
+      const discounted = Number(document.getElementById('oDiscountedPrice').value);
+      const expiry = document.getElementById('oExpiry').value;
+      if (!title || !original || !discounted || !expiry) { notify('❌ Fill required fields', '#ef4444'); return; }
+      await apiUpdate('offers', id, {title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, description: document.getElementById('oDescription').value, image_url: document.getElementById('oImage').value});
+      notify('✅ Offer updated!', '#10b981');
+      loadOffersList();
       loadDashboard();
+      document.getElementById('section-addOffer').querySelector('button').onclick = addOffer;
+      document.getElementById('section-addOffer').querySelector('button').textContent = 'Add Offer';
     }
 
     async function deleteOffer(id) {
-      if (!confirm('Delete?')) return;
+      if (!confirm('Delete this offer?')) return;
       await apiDelete('offers', id);
       notify('✅ Deleted!', '#10b981');
       loadOffersList();
