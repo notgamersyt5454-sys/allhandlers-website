@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AllHandlers | Professional Web Development & Digital Solutions Agency</title>
   <meta name="description" content="AllHandlers is a premium digital agency offering web development, UI/UX design, SEO, graphic design & custom software solutions at affordable prices.">
-  <meta name="keywords" content="AllHandlers, web development, website design, graphic design, SEO services, digital agency, UI/UX design, custom software, affordable web development">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
@@ -18,7 +17,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --primary: #0f172a;
@@ -34,6 +32,7 @@
       --shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: var(--bg);
@@ -72,7 +71,7 @@
     .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
     .logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
-    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; cursor: pointer; }
     .nav-links a:hover { color: var(--accent); }
 
     .hero {
@@ -161,11 +160,11 @@
     <div class="container nav-container">
       <a href="#" class="logo">All<span>Handlers</span></a>
       <div class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="#offers">Offers</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a onclick="scrollToSection('home')">Home</a>
+        <a onclick="scrollToSection('services')">Services</a>
+        <a onclick="scrollToSection('offers')">Offers</a>
+        <a onclick="scrollToSection('about')">About</a>
+        <a onclick="scrollToSection('contact')">Contact</a>
         <a href="admin.html" class="btn btn-primary btn-small">Admin</a>
       </div>
     </div>
@@ -177,7 +176,7 @@
         <h1>Professional Web Development at <span>Affordable Prices</span></h1>
         <p>AllHandlers delivers premium websites, UI/UX design, SEO, and custom software solutions for businesses and startups worldwide.</p>
         <div class="hero-buttons">
-          <a href="#services" class="btn btn-primary">Our Services</a>
+          <a onclick="scrollToSection('services')" class="btn btn-primary" style="cursor:pointer;">Our Services</a>
           <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp">💬 Chat on WhatsApp</a>
         </div>
       </div>
@@ -253,19 +252,31 @@
     const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
     const WHATSAPP_NUMBER = '923712245418';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    async function apiQuery(table) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
+      });
+      return await res.json();
+    }
 
     async function loadServices() {
-      const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-      if (error) { console.error(error); return []; }
-      return data || [];
+      try {
+        const data = await apiQuery('products');
+        return data || [];
+      } catch(e) { return []; }
     }
 
     async function loadOffers() {
-      const now = new Date().toISOString();
-      const { data, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
-      if (error) { console.error(error); return []; }
-      return data || [];
+      try {
+        const now = new Date().toISOString();
+        const data = await apiQuery('offers');
+        return (data || []).filter(o => o.active && new Date(o.expiry_date) > new Date(now));
+      } catch(e) { return []; }
     }
 
     function serviceCard(s) {
@@ -315,7 +326,10 @@
     function renderSlider(id, items, fn) {
       const el = document.getElementById(id);
       if (!el) return;
-      if (!items.length) { el.innerHTML = '<p style="text-align:center;color:var(--text-light);">No items yet. Add from Admin panel.</p>'; return; }
+      if (!items.length) {
+        el.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem;">No items yet. Add from Admin panel.</p>';
+        return;
+      }
       el.innerHTML = `<button class="slider-btn prev" onclick="slide('${id}', -1)">‹</button>
         <div class="slider-track" id="${id}-track">${items.map(fn).join('')}</div>
         <button class="slider-btn next" onclick="slide('${id}', 1)">›</button>`;
