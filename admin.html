@@ -31,18 +31,15 @@
       width: 100%; padding: 12px 15px; margin-bottom: 12px;
       border: 2px solid var(--border); border-radius: 10px; font-size: 1rem;
     }
-    #loginBox input:focus { border-color: var(--accent); outline: none; }
     #loginBox button {
       width: 100%; padding: 12px; background: var(--accent); color: white;
       border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 600;
     }
-    #loginBox button:hover { background: #1d4ed8; }
 
     #adminPanel { display: none; }
     .sidebar {
       position: fixed; top: 0; left: 0; width: 240px; height: 100%;
-      background: var(--primary); color: white; padding: 1.5rem 0;
-      overflow-y: auto;
+      background: var(--primary); color: white; padding: 1.5rem 0; overflow-y: auto;
     }
     .sidebar h2 { padding: 0 1.5rem; margin-bottom: 2rem; font-size: 1.3rem; }
     .sidebar h2 span { color: var(--accent); }
@@ -54,48 +51,28 @@
     .sidebar a.active { background: var(--accent); color: white; }
     
     .main-content { margin-left: 240px; padding: 2rem; }
-    .topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 2rem;
-    }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .topbar h1 { font-size: 1.8rem; }
-    .logout-btn {
-      background: var(--danger); color: white; border: none;
-      padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600;
-    }
+    .logout-btn { background: var(--danger); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; }
     
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem; margin-bottom: 2rem;
-    }
-    .stat-card {
-      background: var(--surface); border-radius: 16px; padding: 1.5rem;
-      text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      border: 1px solid var(--border);
-    }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--surface); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); }
     .stat-card h3 { font-size: 2.5rem; font-weight: 700; }
     .stat-card p { color: var(--text-light); font-size: 0.9rem; }
     
-    .panel {
-      background: var(--surface); border-radius: 16px; padding: 2rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--border);
-      display: none;
-    }
+    .panel { background: var(--surface); border-radius: 16px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); display: none; }
     .panel.active { display: block; }
     .panel h2 { margin-bottom: 1.5rem; }
     
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
     .form-group { margin-bottom: 1rem; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 0.3rem; font-size: 0.9rem; }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, .form-group textarea {
       width: 100%; padding: 0.8rem; border: 1px solid var(--border);
       border-radius: 8px; font-size: 0.95rem; font-family: inherit;
     }
     
-    .btn {
-      padding: 0.8rem 2rem; border: none; border-radius: 8px;
-      cursor: pointer; font-weight: 600; font-size: 0.95rem;
-    }
+    .btn { padding: 0.8rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
     .btn-primary { background: var(--accent); color: white; }
     .btn-success { background: var(--success); color: white; }
     .btn-danger { background: var(--danger); color: white; }
@@ -109,11 +86,10 @@
     .badge-active { background: #dcfce7; color: #166534; }
     .badge-expired { background: #fef3c7; color: #92400e; }
     
-    #notify {
-      position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem;
-      border-radius: 12px; color: white; font-weight: 600;
-      display: none; z-index: 9999;
-    }
+    #notify { position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; border-radius: 12px; color: white; font-weight: 600; display: none; z-index: 9999; }
+    
+    .live-indicator { display: inline-block; width: 10px; height: 10px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; margin-right: 5px; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     
     @media (max-width: 768px) {
       .sidebar { width: 60px; }
@@ -149,12 +125,12 @@
 
     <div class="main-content">
       <div class="topbar">
-        <h1 id="pageTitle">Dashboard</h1>
+        <h1 id="pageTitle"><span class="live-indicator"></span>Dashboard</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
       </div>
 
       <div class="panel active" id="section-dashboard">
-        <h2>Overview</h2>
+        <h2>Live Overview <span style="font-size:0.8rem;color:var(--success);">● Realtime</span></h2>
         <div class="stats-grid">
           <div class="stat-card"><h3 id="totalServices">0</h3><p>Total Services</p></div>
           <div class="stat-card"><h3 id="totalOffers">0</h3><p>Total Offers</p></div>
@@ -194,45 +170,20 @@
       </div>
 
       <div class="panel" id="section-services">
-        <h2>Manage Services</h2>
+        <h2>Manage Services <span style="font-size:0.8rem;color:var(--success);">● Live</span></h2>
         <table class="table"><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="servicesTable"></tbody></table>
       </div>
 
       <div class="panel" id="section-offers">
-        <h2>Manage Offers</h2>
+        <h2>Manage Offers <span style="font-size:0.8rem;color:var(--success);">● Live</span></h2>
         <table class="table"><thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody id="offersTable"></tbody></table>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
-    
-    // Use direct REST API (no supabase-js dependency)
-    async function apiQuery(table) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
-        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
-      });
-      return await res.json();
-    }
-
-    async function apiInsert(table, data) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-        method: 'POST',
-        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      });
-      return await res.json();
-    }
-
-    async function apiDelete(table, id) {
-      await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-        method: 'DELETE',
-        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
-      });
-    }
 
     function notify(msg, color) {
       const n = document.getElementById('notify');
@@ -245,15 +196,14 @@
     function login() {
       const email = document.getElementById('emailInput').value;
       const password = document.getElementById('passwordInput').value;
-      
-      // Simple check - change these credentials
       if (email === 'admin@allhandlers.com' && password === 'Admin@12345') {
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         loadDashboard();
-        notify('✅ Welcome!', '#10b981');
+        subscribeRealtime();
+        notify('✅ Welcome! Realtime connected', '#10b981');
       } else {
-        document.getElementById('loginError').textContent = '❌ Invalid email or password';
+        document.getElementById('loginError').textContent = '❌ Invalid credentials';
       }
     }
 
@@ -262,13 +212,65 @@
       document.getElementById('adminPanel').style.display = 'none';
     }
 
+    // REALTIME SUBSCRIPTION
+    function subscribeRealtime() {
+      const wsUrl = `wss://${SUPABASE_URL.replace('https://','')}/realtime/v1/websocket?apikey=${SUPABASE_ANON_KEY}&vsn=1.0`;
+      const ws = new WebSocket(wsUrl);
+      
+      ws.onopen = () => {
+        ws.send(JSON.stringify({
+          type: 'phx_join',
+          topic: 'realtime:products',
+          payload: { config: { postgres_changes: [{ event: '*', schema: 'public', table: 'products' }] } },
+          ref: '1'
+        }));
+        ws.send(JSON.stringify({
+          type: 'phx_join',
+          topic: 'realtime:offers',
+          payload: { config: { postgres_changes: [{ event: '*', schema: 'public', table: 'offers' }] } },
+          ref: '2'
+        }));
+      };
+      
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'phx_reply' || data.type === 'postgres_changes') {
+          loadDashboard();
+          if (document.getElementById('section-services').classList.contains('active')) loadServicesList();
+          if (document.getElementById('section-offers').classList.contains('active')) loadOffersList();
+        }
+      };
+    }
+
+    async function apiQuery(table) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
+      });
+      return await res.json();
+    }
+
+    async function apiInsert(table, data) {
+      await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method: 'POST',
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+    }
+
+    async function apiDelete(table, id) {
+      await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
+      });
+    }
+
     function showSection(section) {
       document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('section-' + section).classList.add('active');
       event.target.classList.add('active');
       const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Manage Services', offers:'Manage Offers'};
-      document.getElementById('pageTitle').textContent = titles[section];
+      document.getElementById('pageTitle').innerHTML = `<span class="live-indicator"></span>${titles[section]}`;
       if (section === 'services') loadServicesList();
       if (section === 'offers') loadOffersList();
       if (section === 'dashboard') loadDashboard();
@@ -307,7 +309,6 @@
       if (!name || !brand || !price) { notify('❌ Fill required fields', '#ef4444'); return; }
       await apiInsert('products', {name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, description: document.getElementById('sDescription').value, image_url: document.getElementById('sImage').value, availability: true});
       notify('✅ Service added!', '#10b981');
-      loadDashboard();
     }
 
     async function addOffer() {
@@ -318,23 +319,18 @@
       if (!title || !original || !discounted || !expiry) { notify('❌ Fill required fields', '#ef4444'); return; }
       await apiInsert('offers', {title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, description: document.getElementById('oDescription').value, image_url: document.getElementById('oImage').value, active: true});
       notify('✅ Offer added!', '#10b981');
-      loadDashboard();
     }
 
     async function deleteService(id) {
       if (!confirm('Delete?')) return;
       await apiDelete('products', id);
       notify('✅ Deleted!', '#10b981');
-      loadServicesList();
-      loadDashboard();
     }
 
     async function deleteOffer(id) {
       if (!confirm('Delete?')) return;
       await apiDelete('offers', id);
       notify('✅ Deleted!', '#10b981');
-      loadOffersList();
-      loadDashboard();
     }
   </script>
 </body>
