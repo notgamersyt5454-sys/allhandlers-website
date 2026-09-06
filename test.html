@@ -1,31 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Supabase Test</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <title>Test</title>
 </head>
 <body>
-  <h1>Supabase Connection Test</h1>
-  <button onclick="testSupabase()">Test Supabase</button>
+  <h1>Supabase Test</h1>
+  <button onclick="test()">Click Me</button>
   <p id="result"></p>
 
   <script>
-    async function testSupabase() {
-      document.getElementById('result').innerHTML = 'Testing...';
-      
-      const { createClient } = supabase;
-      const client = createClient(
-        'https://kfdhijucdkfjpjfxqbfd.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZGhpanVjZGtmanBqZnhxYmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2Mjg4NTksImV4cCI6MjEwNDIwNDg1OX0.xy1-s8DO0NVXbppgHwc7R11RPmWARM-p8mGrjUulSgk'
-      );
-      
-      const { data, error } = await client.from('products').select('*');
-      
-      if (error) {
-        document.getElementById('result').innerHTML = 'ERROR: ' + error.message;
-      } else {
-        document.getElementById('result').innerHTML = 'SUCCESS! Products: ' + JSON.stringify(data);
-      }
+    function test() {
+      document.getElementById('result').innerHTML = 'Button works! Script running!';
     }
   </script>
 </body>
