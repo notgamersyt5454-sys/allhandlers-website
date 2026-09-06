@@ -48,15 +48,12 @@
     .sidebar h2 span { color: var(--accent); }
     .sidebar a {
       display: block; padding: 0.8rem 1.5rem; color: #cbd5e1;
-      text-decoration: none; font-size: 0.95rem; transition: 0.2s;
-      cursor: pointer;
+      text-decoration: none; font-size: 0.95rem; cursor: pointer;
     }
     .sidebar a:hover { background: rgba(255,255,255,0.1); color: white; }
     .sidebar a.active { background: var(--accent); color: white; }
     
-    .main-content {
-      margin-left: 240px; padding: 2rem;
-    }
+    .main-content { margin-left: 240px; padding: 2rem; }
     .topbar {
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 2rem;
@@ -94,32 +91,23 @@
       width: 100%; padding: 0.8rem; border: 1px solid var(--border);
       border-radius: 8px; font-size: 0.95rem; font-family: inherit;
     }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--accent); outline: none;
-    }
     
     .btn {
       padding: 0.8rem 2rem; border: none; border-radius: 8px;
-      cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: 0.2s;
+      cursor: pointer; font-weight: 600; font-size: 0.95rem;
     }
     .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: #1d4ed8; }
     .btn-success { background: var(--success); color: white; }
     .btn-danger { background: var(--danger); color: white; }
-    .btn-warning { background: var(--warning); color: white; }
     .btn-small { padding: 0.4rem 1rem; font-size: 0.8rem; }
     
     .table { width: 100%; border-collapse: collapse; }
     .table th, .table td { padding: 0.8rem; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.9rem; }
     .table th { background: var(--bg); font-weight: 600; }
-    .table tr:hover { background: #f8fafc; }
     
-    .badge {
-      padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600;
-    }
+    .badge { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
     .badge-active { background: #dcfce7; color: #166534; }
     .badge-expired { background: #fef3c7; color: #92400e; }
-    .badge-inactive { background: #fee2e2; color: #991b1b; }
     
     #notify {
       position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem;
@@ -129,8 +117,8 @@
     
     @media (max-width: 768px) {
       .sidebar { width: 60px; }
-      .sidebar h2, .sidebar a span { display: none; }
-      .sidebar a { text-align: center; padding: 0.8rem 0; }
+      .sidebar h2 { display: none; }
+      .sidebar a { text-align: center; padding: 0.8rem 0; font-size: 1.2rem; }
       .main-content { margin-left: 60px; padding: 1rem; }
       .form-row { grid-template-columns: 1fr; }
     }
@@ -138,7 +126,6 @@
 </head>
 <body>
 
-  <!-- Login -->
   <div id="loginBox">
     <h2>🔐 AllHandlers Admin</h2>
     <p style="color:#64748b;margin-bottom:1rem;">Login to manage your website</p>
@@ -148,12 +135,9 @@
     <p id="loginError" style="color:var(--danger);font-size:0.85rem;margin-top:0.5rem;"></p>
   </div>
 
-  <!-- Notification -->
   <div id="notify"></div>
 
-  <!-- Admin Panel -->
   <div id="adminPanel">
-    <!-- Sidebar -->
     <div class="sidebar">
       <h2>All<span>Handlers</span></h2>
       <a class="active" onclick="showSection('dashboard')">📊 Dashboard</a>
@@ -161,17 +145,14 @@
       <a onclick="showSection('addOffer')">🏷️ Add Offer</a>
       <a onclick="showSection('services')">🛠️ Manage Services</a>
       <a onclick="showSection('offers')">🎯 Manage Offers</a>
-      <a onclick="showSection('settings')">⚙️ Settings</a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
       <div class="topbar">
         <h1 id="pageTitle">Dashboard</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
       </div>
 
-      <!-- Dashboard -->
       <div class="panel active" id="section-dashboard">
         <h2>Overview</h2>
         <div class="stats-grid">
@@ -182,114 +163,54 @@
         </div>
       </div>
 
-      <!-- Add Service -->
       <div class="panel" id="section-addService">
         <h2>Add New Service</h2>
         <div class="form-row">
-          <div class="form-group"><label>Service Name*</label><input id="sName" placeholder="e.g., Business Website"></div>
-          <div class="form-group"><label>Category*</label><input id="sBrand" placeholder="e.g., Web Development"></div>
+          <div class="form-group"><label>Service Name*</label><input id="sName"></div>
+          <div class="form-group"><label>Category*</label><input id="sBrand"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Price (Rs.)*</label><input id="sPrice" type="number" placeholder="50000"></div>
-          <div class="form-group"><label>Discounted Price</label><input id="sDiscount" type="number" placeholder="45000"></div>
+          <div class="form-group"><label>Price (Rs.)*</label><input id="sPrice" type="number"></div>
+          <div class="form-group"><label>Discounted Price</label><input id="sDiscount" type="number"></div>
         </div>
-        <div class="form-group"><label>Description</label><textarea id="sDescription" rows="3" placeholder="Describe the service..."></textarea></div>
-        <div class="form-group"><label>Image URL</label><input id="sImage" placeholder="https://..."></div>
-        <div class="form-group"><label>Featured?</label><select id="sFeatured"><option value="false">No</option><option value="true">Yes</option></select></div>
+        <div class="form-group"><label>Description</label><textarea id="sDescription" rows="3"></textarea></div>
+        <div class="form-group"><label>Image URL</label><input id="sImage"></div>
         <button class="btn btn-primary" onclick="addService()">Add Service</button>
       </div>
 
-      <!-- Add Offer -->
       <div class="panel" id="section-addOffer">
         <h2>Add New Offer</h2>
         <div class="form-row">
-          <div class="form-group"><label>Offer Title*</label><input id="oTitle" placeholder="e.g., Ramadan Special"></div>
+          <div class="form-group"><label>Offer Title*</label><input id="oTitle"></div>
           <div class="form-group"><label>Expiry Date*</label><input id="oExpiry" type="date"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Original Price*</label><input id="oOriginalPrice" type="number" placeholder="60000"></div>
-          <div class="form-group"><label>Discounted Price*</label><input id="oDiscountedPrice" type="number" placeholder="50000"></div>
+          <div class="form-group"><label>Original Price*</label><input id="oOriginalPrice" type="number"></div>
+          <div class="form-group"><label>Discounted Price*</label><input id="oDiscountedPrice" type="number"></div>
         </div>
         <div class="form-group"><label>Description</label><textarea id="oDescription" rows="3"></textarea></div>
-        <div class="form-group"><label>Image URL</label><input id="oImage" placeholder="https://..."></div>
+        <div class="form-group"><label>Image URL</label><input id="oImage"></div>
         <button class="btn btn-success" onclick="addOffer()">Add Offer</button>
       </div>
 
-      <!-- Manage Services -->
       <div class="panel" id="section-services">
         <h2>Manage Services</h2>
-        <table class="table">
-          <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead>
-          <tbody id="servicesTable"></tbody>
-        </table>
+        <table class="table"><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="servicesTable"></tbody></table>
       </div>
 
-      <!-- Manage Offers -->
       <div class="panel" id="section-offers">
         <h2>Manage Offers</h2>
-        <table class="table">
-          <thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="offersTable"></tbody>
-        </table>
-      </div>
-
-      <!-- Settings -->
-      <div class="panel" id="section-settings">
-        <h2>Settings</h2>
-        <div class="form-group"><label>WhatsApp Number</label><input id="waNumber" value="923712245418"></div>
-        <button class="btn btn-primary" onclick="saveSettings()">Save</button>
+        <table class="table"><thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody id="offersTable"></tbody></table>
       </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
-
-    function notify(msg, color) {
-      const n = document.getElementById('notify');
-      n.textContent = msg;
-      n.style.background = color;
-      n.style.display = 'block';
-      setTimeout(() => n.style.display = 'none', 3000);
-    }
-
-    async function login() {
-      const email = document.getElementById('emailInput').value;
-      const password = document.getElementById('passwordInput').value;
-      document.getElementById('loginError').textContent = '';
-      
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      
-      if (error) {
-        document.getElementById('loginError').textContent = '❌ ' + error.message;
-        return;
-      }
-      
-      document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('adminPanel').style.display = 'block';
-      loadDashboard();
-      notify('✅ Welcome back!', '#10b981');
-    }
-
-    async function logout() {
-      await supabase.auth.signOut();
-      document.getElementById('loginBox').style.display = 'block';
-      document.getElementById('adminPanel').style.display = 'none';
-    }
-
-    function showSection(section) {
-      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('section-' + section).classList.add('active');
-      event.target.classList.add('active');
-      const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Manage Services', offers:'Manage Offers', settings:'Settings'};
-      document.getElementById('pageTitle').textContent = titles[section];
-      if (section === 'services') loadServicesList();
-      if (section === 'offers') loadOffersList();
-      if (section === 'dashboard') loadDashboard();
-    }
-
+    
+    // Use direct REST API (no supabase-js dependency)
     async function apiQuery(table) {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
         headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
@@ -307,31 +228,67 @@
     }
 
     async function apiDelete(table, id) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+      await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
         method: 'DELETE',
         headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
       });
-      return await res.json();
+    }
+
+    function notify(msg, color) {
+      const n = document.getElementById('notify');
+      n.textContent = msg;
+      n.style.background = color;
+      n.style.display = 'block';
+      setTimeout(() => n.style.display = 'none', 3000);
+    }
+
+    function login() {
+      const email = document.getElementById('emailInput').value;
+      const password = document.getElementById('passwordInput').value;
+      
+      // Simple check - change these credentials
+      if (email === 'admin@allhandlers.com' && password === 'Admin@12345') {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadDashboard();
+        notify('✅ Welcome!', '#10b981');
+      } else {
+        document.getElementById('loginError').textContent = '❌ Invalid email or password';
+      }
+    }
+
+    function logout() {
+      document.getElementById('loginBox').style.display = 'block';
+      document.getElementById('adminPanel').style.display = 'none';
+    }
+
+    function showSection(section) {
+      document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('section-' + section).classList.add('active');
+      event.target.classList.add('active');
+      const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Manage Services', offers:'Manage Offers'};
+      document.getElementById('pageTitle').textContent = titles[section];
+      if (section === 'services') loadServicesList();
+      if (section === 'offers') loadOffersList();
+      if (section === 'dashboard') loadDashboard();
     }
 
     async function loadDashboard() {
-      try {
-        const services = await apiQuery('products');
-        const offers = await apiQuery('offers');
-        const now = new Date();
-        document.getElementById('totalServices').textContent = services.length || 0;
-        document.getElementById('totalOffers').textContent = offers.length || 0;
-        document.getElementById('activeOffers').textContent = offers.filter(o => o.active && new Date(o.expiry_date) > now).length || 0;
-        document.getElementById('expiredOffers').textContent = offers.filter(o => new Date(o.expiry_date) <= now).length || 0;
-      } catch(e) { console.log(e); }
+      const services = await apiQuery('products');
+      const offers = await apiQuery('offers');
+      const now = new Date();
+      document.getElementById('totalServices').textContent = services.length || 0;
+      document.getElementById('totalOffers').textContent = offers.length || 0;
+      document.getElementById('activeOffers').textContent = offers.filter(o => o.active && new Date(o.expiry_date) > now).length || 0;
+      document.getElementById('expiredOffers').textContent = offers.filter(o => new Date(o.expiry_date) <= now).length || 0;
     }
 
     async function loadServicesList() {
       const data = await apiQuery('products');
-      document.getElementById('servicesTable').innerHTML = (data || []).map(s => `
-        <tr><td>${s.name}</td><td>${s.brand || '-'}</td><td>Rs. ${Number(s.price).toLocaleString()}</td>
-        <td><button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button></td></tr>
-      `).join('') || '<tr><td colspan="4">No services</td></tr>';
+      document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
+        `<tr><td>${s.name}</td><td>${s.brand || '-'}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button class="btn btn-danger btn-small" onclick="deleteService(${s.id})">Delete</button></td></tr>`
+      ).join('') || '<tr><td colspan="4">No services</td></tr>';
     }
 
     async function loadOffersList() {
@@ -339,10 +296,7 @@
       const now = new Date();
       document.getElementById('offersTable').innerHTML = (data || []).map(o => {
         const expired = new Date(o.expiry_date) <= now;
-        return `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td>
-        <td>${new Date(o.expiry_date).toLocaleDateString()}</td>
-        <td><span class="badge ${expired ? 'badge-expired' : 'badge-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td>
-        <td><button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`;
+        return `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td>${new Date(o.expiry_date).toLocaleDateString()}</td><td><span class="badge ${expired ? 'badge-expired' : 'badge-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td><td><button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`;
       }).join('') || '<tr><td colspan="5">No offers</td></tr>';
     }
 
@@ -351,14 +305,7 @@
       const brand = document.getElementById('sBrand').value;
       const price = document.getElementById('sPrice').value;
       if (!name || !brand || !price) { notify('❌ Fill required fields', '#ef4444'); return; }
-      await apiInsert('products', {
-        name, brand, price: Number(price),
-        discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null,
-        description: document.getElementById('sDescription').value,
-        image_url: document.getElementById('sImage').value,
-        featured: document.getElementById('sFeatured').value === 'true',
-        availability: true
-      });
+      await apiInsert('products', {name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, description: document.getElementById('sDescription').value, image_url: document.getElementById('sImage').value, availability: true});
       notify('✅ Service added!', '#10b981');
       loadDashboard();
     }
@@ -369,14 +316,7 @@
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
       const expiry = document.getElementById('oExpiry').value;
       if (!title || !original || !discounted || !expiry) { notify('❌ Fill required fields', '#ef4444'); return; }
-      await apiInsert('offers', {
-        title, original_price: original, discounted_price: discounted,
-        discount_percentage: Math.round(((original-discounted)/original)*100),
-        expiry_date: expiry,
-        description: document.getElementById('oDescription').value,
-        image_url: document.getElementById('oImage').value,
-        active: true
-      });
+      await apiInsert('offers', {title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, description: document.getElementById('oDescription').value, image_url: document.getElementById('oImage').value, active: true});
       notify('✅ Offer added!', '#10b981');
       loadDashboard();
     }
@@ -396,11 +336,6 @@
       loadOffersList();
       loadDashboard();
     }
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   </script>
 </body>
 </html>
