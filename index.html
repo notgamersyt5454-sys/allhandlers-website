@@ -131,6 +131,14 @@
     .why-card { background: white; border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
     .why-icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: 0.9rem; border: 1px solid var(--border);
+      border-radius: 10px; margin-bottom: 0.8rem; font-family: inherit; font-size: 0.95rem;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: var(--accent); outline: none;
+    }
+
     .whatsapp-float {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
       background: var(--whatsapp); color: white; width: 56px; height: 56px;
@@ -231,10 +239,19 @@
   </section>
 
   <section id="contact">
-    <div class="container" style="max-width:600px;text-align:center;">
+    <div class="container" style="max-width:600px;">
       <h2 class="section-title">Contact Us</h2>
-      <p style="margin-bottom:1rem;color:var(--text-light);">Have a project? Message us on WhatsApp!</p>
-      <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp" style="font-size:1.1rem;">💬 Chat on WhatsApp</a>
+      <p style="text-align:center;margin-bottom:1rem;color:var(--text-light);">Have a project or question? Send us a message!</p>
+      <div class="contact-form">
+        <input id="qName" placeholder="Your Name*">
+        <input id="qEmail" placeholder="Your Email*" type="email">
+        <input id="qService" placeholder="Service Needed (optional)">
+        <textarea id="qMessage" rows="4" placeholder="Your message*"></textarea>
+        <button onclick="submitQuery()" class="btn btn-primary" style="width:100%;">Send Message</button>
+      </div>
+      <p style="text-align:center;margin-top:1.5rem;">
+        <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp">💬 Chat on WhatsApp</a>
+      </p>
     </div>
   </section>
 
@@ -264,18 +281,22 @@
       return await res.json();
     }
 
+    async function apiInsert(table, data) {
+      await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method: 'POST',
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+    }
+
     async function loadServices() {
-      try {
-        const data = await apiQuery('products');
-        return data || [];
-      } catch(e) { return []; }
+      try { return await apiQuery('products') || []; } catch(e) { return []; }
     }
 
     async function loadOffers() {
       try {
-        const now = new Date().toISOString();
         const data = await apiQuery('offers');
-        return (data || []).filter(o => o.active && new Date(o.expiry_date) > new Date(now));
+        return (data || []).filter(o => o.active && new Date(o.expiry_date) > new Date());
       } catch(e) { return []; }
     }
 
@@ -343,6 +364,20 @@
       if (positions[id] < 0) positions[id] = track.children.length - 1;
       if (positions[id] >= track.children.length) positions[id] = 0;
       track.style.transform = `translateX(-${positions[id] * (track.children[0].offsetWidth + 24)}px)`;
+    }
+
+    async function submitQuery() {
+      const name = document.getElementById('qName').value;
+      const email = document.getElementById('qEmail').value;
+      const service = document.getElementById('qService').value;
+      const message = document.getElementById('qMessage').value;
+      if (!name || !email || !message) { alert('❌ Please fill required fields'); return; }
+      await apiInsert('queries', { name, email, service, message, status: 'new' });
+      alert('✅ Message sent! We will contact you soon.');
+      document.getElementById('qName').value = '';
+      document.getElementById('qEmail').value = '';
+      document.getElementById('qService').value = '';
+      document.getElementById('qMessage').value = '';
     }
 
     async function init() {
