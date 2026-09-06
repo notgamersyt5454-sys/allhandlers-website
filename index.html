@@ -83,6 +83,50 @@
     .why-card { background: white; border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
     .why-icon { font-size: 2rem; margin-bottom: 0.5rem; }
 
+    .slider-container { position: relative; overflow: hidden; padding: 0 40px; }
+    .slider-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease; }
+    .slider-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: white; border: 1px solid var(--border); border-radius: 50%;
+      width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;
+      z-index: 10; box-shadow: var(--shadow);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .slider-btn.prev { left: 0; }
+    .slider-btn.next { right: 0; }
+
+    .offer-card {
+      min-width: 300px; max-width: 300px; flex-shrink: 0;
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+      border: 1px solid var(--border); transition: 0.3s;
+    }
+    .offer-card:hover { transform: translateY(-6px); }
+    .offer-image { height: 180px; overflow: hidden; position: relative; }
+    .offer-image img { width: 100%; height: 100%; object-fit: cover; }
+    .badge-offer {
+      position: absolute; top: 10px; left: 10px;
+      background: #f59e0b; color: white; padding: 0.3rem 0.8rem;
+      border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+    }
+    .offer-info { padding: 1rem; }
+    .offer-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; }
+    .original-price { text-decoration: line-through; color: var(--text-light); font-size: 0.85rem; }
+    .current-price { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
+    .save-badge { background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
+    .countdown { display: flex; gap: 0.4rem; }
+    .countdown span { background: var(--primary); color: white; padding: 0.3rem 0.6rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; }
+
+    .faq-item {
+      background: white; border-radius: 12px; padding: 1rem 1.5rem;
+      margin-bottom: 0.8rem; cursor: pointer; border: 1px solid var(--border);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    }
+    .faq-item h3 { font-size: 1rem; font-weight: 600; }
+    .faq-answer { display: none; margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem; }
+    .faq-item.active .faq-answer { display: block; }
+
     .contact-form input, .contact-form textarea {
       width: 100%; padding: 0.9rem; border: 1px solid var(--border);
       border-radius: 10px; margin-bottom: 0.8rem; font-family: inherit; font-size: 0.95rem;
@@ -104,6 +148,8 @@
       .hero-content { padding-right: 0; }
       .hero-content h1 { font-size: 2rem; }
       .hero-image { min-height: 250px; }
+      .slider-container { padding: 0 20px; }
+      .offer-card { min-width: 260px; max-width: 260px; }
     }
   </style>
 </head>
@@ -114,6 +160,8 @@
       <a href="#" class="logo">All<span>Handlers</span></a>
       <div class="nav-links">
         <a onclick="scrollToSection('home')">Home</a>
+        <a onclick="scrollToSection('offers')">Offers</a>
+        <a onclick="scrollToSection('faq')">FAQ</a>
         <a onclick="scrollToSection('about')">About</a>
         <a onclick="scrollToSection('contact')">Contact</a>
         <a href="admin.html" class="btn btn-primary btn-small">Admin</a>
@@ -127,7 +175,7 @@
         <h1>Professional Web Development at <span>Affordable Prices</span></h1>
         <p>AllHandlers delivers premium websites, UI/UX design, SEO, and custom software solutions for businesses and startups worldwide.</p>
         <div class="hero-buttons">
-          <a href="https://wa.me/923712245418" target="_blank" class="btn btn-primary">Get Started</a>
+          <a onclick="scrollToSection('offers')" class="btn btn-primary" style="cursor:pointer;">View Offers</a>
           <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp">💬 Chat on WhatsApp</a>
         </div>
       </div>
@@ -147,6 +195,41 @@
         <div class="why-card"><div class="why-icon">🎨</div><h3>Creative Design</h3><p>Beautiful, modern designs that represent your brand.</p></div>
         <div class="why-card"><div class="why-icon">💬</div><h3>WhatsApp Support</h3><p>Direct communication and fast responses.</p></div>
         <div class="why-card"><div class="why-icon">🏷️</div><h3>Special Offers</h3><p>Limited-time deals on web development packages.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="offers" style="background:var(--surface);">
+    <div class="container">
+      <h2 class="section-title">Current Offers</h2>
+      <p class="section-subtitle">Limited time deals — grab them before they expire</p>
+      <div class="slider-container" id="offersSlider"></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container" style="max-width:700px;">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Quick answers to common questions</p>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>How long does a website take?</h3>
+        <div class="faq-answer">Most projects are completed within 2-4 weeks depending on complexity.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>How much does a website cost?</h3>
+        <div class="faq-answer">Pricing depends on your requirements. Contact us on WhatsApp for a free quote.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Do you redesign existing websites?</h3>
+        <div class="faq-answer">Yes, we specialize in modern redesigns that improve both aesthetics and performance.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Can you maintain my website?</h3>
+        <div class="faq-answer">Absolutely! We offer ongoing maintenance plans to keep your site updated and secure.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>What technologies do you use?</h3>
+        <div class="faq-answer">We use modern technologies including HTML5, CSS3, JavaScript, React, Firebase, and more.</div>
       </div>
     </div>
   </section>
@@ -188,9 +271,66 @@
   <script>
     const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
+    const WHATSAPP_NUMBER = '923712245418';
 
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    async function apiQuery(table) {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, {
+          headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
+        });
+        return await res.json();
+      } catch(e) { return []; }
+    }
+
+    function offerCard(o) {
+      const discount = o.discount_percentage || Math.round(((o.original_price - o.discounted_price) / o.original_price) * 100);
+      const diff = new Date(o.expiry_date) - new Date();
+      if (diff <= 0) return '';
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      return `<div class="offer-card">
+        <div class="offer-image">
+          <span class="badge-offer">SPECIAL OFFER</span>
+          <img src="${o.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${o.title}" loading="lazy">
+        </div>
+        <div class="offer-info">
+          <h3>${o.title}</h3>
+          <div class="price-row">
+            <span class="original-price">Rs. ${Number(o.original_price).toLocaleString()}</span>
+            <span class="current-price">Rs. ${Number(o.discounted_price).toLocaleString()}</span>
+            <span class="save-badge">SAVE ${discount}%</span>
+          </div>
+          <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
+          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
+        </div>
+      </div>`;
+    }
+
+    function renderSlider(id, items, fn) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!items.length) {
+        el.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem;">No offers currently. Check back soon!</p>';
+        return;
+      }
+      el.innerHTML = `<button class="slider-btn prev" onclick="slide('${id}', -1)">‹</button>
+        <div class="slider-track" id="${id}-track">${items.map(fn).join('')}</div>
+        <button class="slider-btn next" onclick="slide('${id}', 1)">›</button>`;
+    }
+
+    let positions = {};
+    function slide(id, dir) {
+      const track = document.getElementById(id + '-track');
+      if (!track || !track.children.length) return;
+      positions[id] = (positions[id] || 0) + dir;
+      if (positions[id] < 0) positions[id] = track.children.length - 1;
+      if (positions[id] >= track.children.length) positions[id] = 0;
+      track.style.transform = `translateX(-${positions[id] * (track.children[0].offsetWidth + 24)}px)`;
     }
 
     async function submitQuery() {
@@ -210,6 +350,14 @@
       document.getElementById('qService').value = '';
       document.getElementById('qMessage').value = '';
     }
+
+    async function initOffers() {
+      const offers = await apiQuery('offers');
+      const activeOffers = offers.filter(o => o.active && new Date(o.expiry_date) > new Date());
+      renderSlider('offersSlider', activeOffers, offerCard);
+    }
+
+    initOffers();
   </script>
 </body>
 </html>
