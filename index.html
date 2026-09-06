@@ -48,7 +48,9 @@
       transition: 0.3s; font-size: 0.95rem;
     }
     .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
     .btn-whatsapp { background: var(--whatsapp); color: white; }
+    .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
     .btn-small { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
 
     .navbar {
@@ -64,34 +66,53 @@
     .nav-links a:hover { color: var(--accent); }
 
     .hero {
-      display: flex; align-items: center; min-height: 70vh;
+      display: flex; align-items: center; min-height: 80vh;
       padding: 2rem 0; background: linear-gradient(135deg, #0f172a, #1e293b);
+      position: relative; overflow: hidden;
     }
-    .hero-content { flex: 1; color: white; padding-right: 2rem; }
-    .hero-content h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+    .hero::before {
+      content: ''; position: absolute; top: -50%; right: -20%;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: rgba(37,99,235,0.2); filter: blur(80px);
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -30%; left: -10%;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(6,182,212,0.15); filter: blur(60px);
+    }
+    .hero-content { flex: 1; color: white; padding-right: 2rem; position: relative; z-index: 1; }
+    .hero-content h1 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
     .hero-content h1 span { color: var(--highlight); }
-    .hero-content p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 1.5rem; }
+    .hero-content p { font-size: 1.15rem; color: #cbd5e1; margin-bottom: 1.5rem; }
     .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-image { flex: 1; min-height: 350px; }
+    .hero-image { flex: 1; min-height: 400px; position: relative; z-index: 1; }
     .hero-image img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    section { padding: 3.5rem 0; }
-    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
-    .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 2rem; }
+    section { padding: 4rem 0; }
+    .section-title { font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
+    .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 2.5rem; }
 
     .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
-    .why-card { background: white; border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
-    .why-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .why-card {
+      background: white; border-radius: var(--radius); padding: 2rem 1.5rem;
+      text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border);
+      transition: 0.3s;
+    }
+    .why-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .why-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
 
+    /* Slider */
     .slider-container { position: relative; overflow: hidden; padding: 0 40px; }
     .slider-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease; }
     .slider-btn {
       position: absolute; top: 50%; transform: translateY(-50%);
       background: white; border: 1px solid var(--border); border-radius: 50%;
-      width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;
+      width: 44px; height: 44px; cursor: pointer; font-size: 1.3rem;
       z-index: 10; box-shadow: var(--shadow);
       display: flex; align-items: center; justify-content: center;
+      transition: 0.2s;
     }
+    .slider-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
     .slider-btn.prev { left: 0; }
     .slider-btn.next { right: 0; }
 
@@ -101,7 +122,7 @@
       box-shadow: var(--shadow); overflow: hidden;
       border: 1px solid var(--border); transition: 0.3s;
     }
-    .offer-card:hover { transform: translateY(-6px); }
+    .offer-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
     .offer-image { height: 180px; overflow: hidden; position: relative; }
     .offer-image img { width: 100%; height: 100%; object-fit: cover; }
     .badge-offer {
@@ -109,20 +130,38 @@
       background: #f59e0b; color: white; padding: 0.3rem 0.8rem;
       border-radius: 50px; font-size: 0.75rem; font-weight: 600;
     }
-    .offer-info { padding: 1rem; }
+    .offer-info { padding: 1.2rem; }
     .offer-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
     .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; }
     .original-price { text-decoration: line-through; color: var(--text-light); font-size: 0.85rem; }
     .current-price { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
     .save-badge { background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
-    .countdown { display: flex; gap: 0.4rem; }
+    .countdown { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; }
     .countdown span { background: var(--primary); color: white; padding: 0.3rem 0.6rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; }
+
+    /* Brands slider */
+    .brand-card {
+      min-width: 120px; max-width: 120px; flex-shrink: 0;
+      background: white; border-radius: var(--radius); padding: 1rem;
+      text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .brand-card span { font-size: 0.9rem; font-weight: 600; }
+
+    /* Reviews slider */
+    .review-card {
+      min-width: 280px; max-width: 280px; flex-shrink: 0;
+      background: white; border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .review-card p { font-style: italic; color: var(--text-light); }
+    .review-card strong { color: var(--accent); }
 
     .faq-item {
       background: white; border-radius: 12px; padding: 1rem 1.5rem;
       margin-bottom: 0.8rem; cursor: pointer; border: 1px solid var(--border);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.2s;
     }
+    .faq-item:hover { border-color: var(--accent); }
     .faq-item h3 { font-size: 1rem; font-weight: 600; }
     .faq-answer { display: none; margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem; }
     .faq-item.active .faq-answer { display: block; }
@@ -131,14 +170,20 @@
       width: 100%; padding: 0.9rem; border: 1px solid var(--border);
       border-radius: 10px; margin-bottom: 0.8rem; font-family: inherit; font-size: 0.95rem;
     }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); outline: none; }
 
     .whatsapp-float {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
       background: var(--whatsapp); color: white; width: 56px; height: 56px;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37,211,102,0.4);
-      text-decoration: none;
+      text-decoration: none; animation: pulse 2s infinite;
     }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 10px 25px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 10px 40px rgba(37,211,102,0.7); }
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
 
     footer { background: var(--primary); color: white; padding: 3rem 0; text-align: center; }
 
@@ -194,11 +239,12 @@
         <div class="why-card"><div class="why-icon">✅</div><h3>Trusted Quality</h3><p>Professional websites built to perform and convert.</p></div>
         <div class="why-card"><div class="why-icon">🎨</div><h3>Creative Design</h3><p>Beautiful, modern designs that represent your brand.</p></div>
         <div class="why-card"><div class="why-icon">💬</div><h3>WhatsApp Support</h3><p>Direct communication and fast responses.</p></div>
-        <div class="why-card"><div class="why-icon">🏷️</div><h3>Special Offers</h3><p>Limited-time deals on web development packages.</p></div>
+        <div class="why-card"><div class="why-icon">⚡</div><h3>Fast Delivery</h3><p>Quick turnaround on all projects.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- Offers Slider -->
   <section id="offers" style="background:var(--surface);">
     <div class="container">
       <h2 class="section-title">Current Offers</h2>
@@ -207,6 +253,25 @@
     </div>
   </section>
 
+  <!-- Brands Slider -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Technologies We Use</h2>
+      <p class="section-subtitle">Modern tools and technologies for your projects</p>
+      <div class="slider-container" id="brandsSlider"></div>
+    </div>
+  </section>
+
+  <!-- Reviews Slider -->
+  <section style="background:var(--surface);">
+    <div class="container">
+      <h2 class="section-title">Client Reviews</h2>
+      <p class="section-subtitle">What our clients say about us</p>
+      <div class="slider-container" id="reviewsSlider"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
   <section id="faq">
     <div class="container" style="max-width:700px;">
       <h2 class="section-title">Frequently Asked Questions</h2>
@@ -234,6 +299,7 @@
     </div>
   </section>
 
+  <!-- About -->
   <section id="about" style="background:var(--surface);">
     <div class="container" style="max-width:700px;text-align:center;">
       <h2 class="section-title">About AllHandlers</h2>
@@ -241,6 +307,7 @@
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <div class="container" style="max-width:600px;">
       <h2 class="section-title">Contact Us</h2>
@@ -306,7 +373,7 @@
             <span class="save-badge">SAVE ${discount}%</span>
           </div>
           <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
-          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
+          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Get This Deal</a>
         </div>
       </div>`;
     }
@@ -315,7 +382,7 @@
       const el = document.getElementById(id);
       if (!el) return;
       if (!items.length) {
-        el.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem;">No offers currently. Check back soon!</p>';
+        el.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem;">No items yet.</p>';
         return;
       }
       el.innerHTML = `<button class="slider-btn prev" onclick="slide('${id}', -1)">‹</button>
@@ -345,19 +412,28 @@
         body: JSON.stringify({ name, email, service, message, status: 'new' })
       });
       alert('✅ Message sent!');
-      document.getElementById('qName').value = '';
-      document.getElementById('qEmail').value = '';
-      document.getElementById('qService').value = '';
-      document.getElementById('qMessage').value = '';
     }
 
-    async function initOffers() {
+    async function init() {
+      // Offers
       const offers = await apiQuery('offers');
       const activeOffers = offers.filter(o => o.active && new Date(o.expiry_date) > new Date());
       renderSlider('offersSlider', activeOffers, offerCard);
+
+      // Brands/Technologies
+      const brands = ['HTML5', 'CSS3', 'JavaScript', 'React', 'Firebase', 'Supabase', 'Node.js', 'Python'];
+      renderSlider('brandsSlider', brands, b => `<div class="brand-card"><span>${b}</span></div>`);
+
+      // Reviews
+      const reviews = [
+        {name:'Ahmed Raza', text:'Excellent web development services. Very professional team!'},
+        {name:'Sara Khan', text:'Great prices and fast delivery. Highly recommended!'},
+        {name:'Usman Ali', text:'Trustworthy agency with quality work. Will use again.'},
+      ];
+      renderSlider('reviewsSlider', reviews, r => `<div class="review-card"><p>"${r.text}"</p><strong>- ${r.name}</strong></div>`);
     }
 
-    initOffers();
+    init();
   </script>
 </body>
 </html>
