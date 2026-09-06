@@ -5,9 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AllHandlers | Professional Web Development & Digital Solutions Agency</title>
   <meta name="description" content="AllHandlers is a premium digital agency offering web development, UI/UX design, SEO, graphic design & custom software solutions at affordable prices.">
+  <meta name="keywords" content="AllHandlers, web development, website design, graphic design, SEO services, digital agency, UI/UX design, custom software, affordable web development">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
+  <meta name="google-site-verification" content="QoeuWDTxmPK3bMmPbizSktXQCYpdfv310M07ZElDH8g">
+  <meta name="msvalidate.01" content="D4E1D6481133010922C8A237AC9EC696">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AllHandlers | Professional Web Development & Digital Solutions">
+  <meta property="og:description" content="Premium digital agency for web development, UI/UX design, SEO & custom software at affordable prices.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -49,7 +56,9 @@
       font-size: 0.95rem;
     }
     .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
     .btn-whatsapp { background: var(--whatsapp); color: white; }
+    .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
     .btn-small { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
 
     .navbar {
@@ -130,6 +139,7 @@
       font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37,211,102,0.4);
       text-decoration: none;
     }
+    .whatsapp-float:hover { transform: scale(1.1); }
 
     footer { background: var(--primary); color: white; padding: 3rem 0; text-align: center; }
     footer a { color: #94a3b8; text-decoration: none; }
@@ -240,19 +250,21 @@
   <a href="https://wa.me/923712245418" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">💬</a>
 
   <script>
-    const SUPABASE_URL = 'https://kfdhijucdkfjpjfxqbfd.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZGhpanVjZGtmanBqZnhxYmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2Mjg4NTksImV4cCI6MjEwNDIwNDg1OX0.xy1-s8DO0NVXbppgHwc7R11RPmWARM-p8mGrjUulSgk';
+    const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
     const WHATSAPP_NUMBER = '923712245418';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     async function loadServices() {
       const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+      if (error) { console.error(error); return []; }
       return data || [];
     }
 
     async function loadOffers() {
       const now = new Date().toISOString();
       const { data, error } = await supabase.from('offers').select('*').eq('active', true).gt('expiry_date', now);
+      if (error) { console.error(error); return []; }
       return data || [];
     }
 
