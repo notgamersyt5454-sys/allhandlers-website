@@ -8,12 +8,6 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
-  <meta name="google-site-verification" content="QoeuWDTxmPK3bMmPbizSktXQCYpdfv310M07ZElDH8g">
-  <meta name="msvalidate.01" content="D4E1D6481133010922C8A237AC9EC696">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AllHandlers | Professional Web Development & Digital Solutions">
-  <meta property="og:description" content="Premium digital agency for web development, UI/UX design, SEO & custom software at affordable prices.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -42,30 +36,19 @@
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 2rem; border-radius: 50px; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: 0.3s; font-size: 0.95rem;
     }
     .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
     .btn-whatsapp { background: var(--whatsapp); color: white; }
-    .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
     .btn-small { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
 
     .navbar {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0.8rem 0;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 0.8rem 0;
     }
     .nav-container { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
     .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
@@ -76,8 +59,7 @@
 
     .hero {
       display: flex; align-items: center; min-height: 70vh;
-      padding: 2rem 0;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      padding: 2rem 0; background: linear-gradient(135deg, #0f172a, #1e293b);
     }
     .hero-content { flex: 1; color: white; padding-right: 2rem; }
     .hero-content h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
@@ -135,9 +117,6 @@
       width: 100%; padding: 0.9rem; border: 1px solid var(--border);
       border-radius: 10px; margin-bottom: 0.8rem; font-family: inherit; font-size: 0.95rem;
     }
-    .contact-form input:focus, .contact-form textarea:focus {
-      border-color: var(--accent); outline: none;
-    }
 
     .whatsapp-float {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
@@ -146,10 +125,8 @@
       font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37,211,102,0.4);
       text-decoration: none;
     }
-    .whatsapp-float:hover { transform: scale(1.1); }
 
     footer { background: var(--primary); color: white; padding: 3rem 0; text-align: center; }
-    footer a { color: #94a3b8; text-decoration: none; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -275,10 +252,12 @@
     }
 
     async function apiQuery(table) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
-        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
-      });
-      return await res.json();
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, {
+          headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
+        });
+        return await res.json();
+      } catch(e) { console.error('Error:', e); return []; }
     }
 
     async function apiInsert(table, data) {
@@ -287,17 +266,6 @@
         headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       });
-    }
-
-    async function loadServices() {
-      try { return await apiQuery('products') || []; } catch(e) { return []; }
-    }
-
-    async function loadOffers() {
-      try {
-        const data = await apiQuery('offers');
-        return (data || []).filter(o => o.active && new Date(o.expiry_date) > new Date());
-      } catch(e) { return []; }
     }
 
     function serviceCard(s) {
@@ -373,18 +341,15 @@
       const message = document.getElementById('qMessage').value;
       if (!name || !email || !message) { alert('❌ Please fill required fields'); return; }
       await apiInsert('queries', { name, email, service, message, status: 'new' });
-      alert('✅ Message sent! We will contact you soon.');
-      document.getElementById('qName').value = '';
-      document.getElementById('qEmail').value = '';
-      document.getElementById('qService').value = '';
-      document.getElementById('qMessage').value = '';
+      alert('✅ Message sent!');
     }
 
     async function init() {
-      const services = await loadServices();
-      const offers = await loadOffers();
+      const services = await apiQuery('products');
+      const offers = await apiQuery('offers');
+      const activeOffers = offers.filter(o => o.active && new Date(o.expiry_date) > new Date());
       renderSlider('featuredSlider', services.slice(0, 6), serviceCard);
-      renderSlider('offersSlider', offers, offerCard);
+      renderSlider('offersSlider', activeOffers, offerCard);
       renderSlider('allServicesSlider', services, serviceCard);
     }
 
