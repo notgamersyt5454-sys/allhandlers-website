@@ -1,44 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllHandlers Admin</title>
+  <style>
+    body { font-family: Arial; background: #f1f5f9; margin: 0; padding: 20px; }
+    #loginBox { max-width: 350px; margin: 100px auto; background: white; padding: 30px; border-radius: 16px; text-align: center; }
+    #loginBox input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    #loginBox button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+    #adminPanel { display: none; max-width: 800px; margin: 0 auto; }
+    .tabs button { padding: 10px 20px; margin: 5px; cursor: pointer; border: 1px solid #ddd; border-radius: 8px; background: white; }
+    .tabs button.active { background: #2563eb; color: white; }
+    .panel { display: none; background: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
+    .panel.active { display: block; }
+    input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+    #notify { position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 12px; color: white; display: none; }
+  </style>
 </head>
 <body>
 
-  <h1>Admin Login</h1>
-  
-  <input type="text" id="email" placeholder="Email" value="admin@allhandlers.com">
-  <br><br>
-  <input type="password" id="password" placeholder="Password" value="Admin@12345">
-  <br><br>
-  <button onclick="login()">Login</button>
-  
-  <p id="result"></p>
+  <div id="loginBox">
+    <h2>🔐 Admin Login</h2>
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <button onclick="checkLogin()">Login</button>
+    <p id="loginError" style="color:red;"></p>
+  </div>
+
+  <div id="notify"></div>
+
+  <div id="adminPanel">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2>AllHandlers Admin Dashboard</h2>
+      <button onclick="logout()" style="background:#ef4444;color:white;border:none;padding:10px 20px;border-radius:8px;">Logout</button>
+    </div>
+
+    <div class="tabs">
+      <button class="active" onclick="showTab('dashboard')">Dashboard</button>
+      <button onclick="showTab('services')">Services</button>
+      <button onclick="showTab('offers')">Offers</button>
+      <button onclick="showTab('addService')">+ Add Service</button>
+      <button onclick="showTab('addOffer')">+ Add Offer</button>
+    </div>
+
+    <div class="panel active" id="panel-dashboard">
+      <h3>Overview</h3>
+      <p>Services: <strong id="totalServices">0</strong></p>
+      <p>Offers: <strong id="totalOffers">0</strong></p>
+    </div>
+
+    <div class="panel" id="panel-services">
+      <h3>Services List</h3>
+      <table><thead><tr><th>Name</th><th>Price</th><th>Delete</th></tr></thead><tbody id="servicesTable"></tbody></table>
+    </div>
+
+    <div class="panel" id="panel-offers">
+      <h3>Offers List</h3>
+      <table><thead><tr><th>Title</th><th>Price</th><th>Delete</th></tr></thead><tbody id="offersTable"></tbody></table>
+    </div>
+
+    <div class="panel" id="panel-addService">
+      <h3>Add Service</h3>
+      <input id="sName" placeholder="Service Name">
+      <input id="sBrand" placeholder="Category">
+      <input id="sPrice" placeholder="Price (Rs.)" type="number">
+      <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
+      <input id="sImage" placeholder="Image URL">
+      <button onclick="addService()" style="background:#2563eb;color:white;border:none;padding:12px 30px;border-radius:8px;">Add Service</button>
+    </div>
+
+    <div class="panel" id="panel-addOffer">
+      <h3>Add Offer</h3>
+      <input id="oTitle" placeholder="Offer Title">
+      <input id="oOriginalPrice" placeholder="Original Price" type="number">
+      <input id="oDiscountedPrice" placeholder="Discounted Price" type="number">
+      <input id="oExpiry" placeholder="Expiry Date" type="date">
+      <input id="oImage" placeholder="Image URL">
+      <button onclick="addOffer()" style="background:#10b981;color:white;border:none;padding:12px 30px;border-radius:8px;">Add Offer</button>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    const ADMIN_PASSWORD = 'admin123';
     const supabase = window.supabase.createClient(
-      'https://kfdhijucdkfjpjfxqbfd.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmZGhpanVjZGtmanBqZnhxYmZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2Mjg4NTksImV4cCI6MjEwNDIwNDg1OX0.xy1-s8DO0NVXbppgHwc7R11RPmWARM-p8mGrjUulSgk'
+      'https://xdlixvdxekmhnoejdmuz.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk'
     );
 
-    async function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      document.getElementById('result').innerHTML = 'Trying...';
+    function notify(msg, color) {
+      const n = document.getElementById('notify');
+      n.textContent = msg;
+      n.style.background = color;
+      n.style.display = 'block';
+      setTimeout(() => n.style.display = 'none', 3000);
+    }
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-
-      if (error) {
-        document.getElementById('result').innerHTML = 'ERROR: ' + error.message;
+    function checkLogin() {
+      const pw = document.getElementById('passwordInput').value;
+      if (pw === ADMIN_PASSWORD) {
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadDashboard();
+        notify('✅ Login successful!', '#10b981');
       } else {
-        document.getElementById('result').innerHTML = 'SUCCESS! User ID: ' + data.user.id;
+        document.getElementById('loginError').textContent = '❌ Wrong password!';
       }
     }
-  </script>
 
+    function logout() {
+      document.getElementById('loginBox').style.display = 'block';
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('passwordInput').value = '';
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + tab).classList.add('active');
+      event.target.classList.add('active');
+      if (tab === 'services') loadServicesList();
+      if (tab === 'offers') loadOffersList();
+      if (tab === 'dashboard') loadDashboard();
+    }
+
+    async function loadDashboard() {
+      const { data: services } = await supabase.from('products').select('*');
+      const { data: offers } = await supabase.from('offers').select('*');
+      document.getElementById('totalServices').textContent = services ? services.length : 0;
+      document.getElementById('totalOffers').textContent = offers ? offers.length : 0;
+    }
+
+    async function loadServicesList() {
+      const { data } = await supabase.from('products').select('*');
+      document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
+        `<tr><td>${s.name}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button onclick="deleteService(${s.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;">Delete</button></td></tr>`
+      ).join('') || '<tr><td colspan="3">No services</td></tr>';
+    }
+
+    async function loadOffersList() {
+      const { data } = await supabase.from('offers').select('*');
+      document.getElementById('offersTable').innerHTML = (data || []).map(o => 
+        `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td><button onclick="deleteOffer(${o.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;">Delete</button></td></tr>`
+      ).join('') || '<tr><td colspan="3">No offers</td></tr>';
+    }
+
+    async function addService() {
+      const name = document.getElementById('sName').value;
+      const brand = document.getElementById('sBrand').value;
+      const price = document.getElementById('sPrice').value;
+      if (!name || !brand || !price) { notify('❌ Fill all fields', '#ef4444'); return; }
+      const { error } = await supabase.from('products').insert([{name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value}]);
+      if (error) { notify('❌ ' + error.message, '#ef4444'); return; }
+      notify('✅ Service added!', '#10b981');
+      loadDashboard();
+    }
+
+    async function addOffer() {
+      const title = document.getElementById('oTitle').value;
+      const original = Number(document.getElementById('oOriginalPrice').value);
+      const discounted = Number(document.getElementById('oDiscountedPrice').value);
+      const expiry = document.getElementById('oExpiry').value;
+      if (!title || !original || !discounted || !expiry) { notify('❌ Fill all fields', '#ef4444'); return; }
+      const { error } = await supabase.from('offers').insert([{title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true}]);
+      if (error) { notify('❌ ' + error.message, '#ef4444'); return; }
+      notify('✅ Offer added!', '#10b981');
+      loadDashboard();
+    }
+
+    async function deleteService(id) {
+      if (!confirm('Delete?')) return;
+      await supabase.from('products').delete().eq('id', id);
+      notify('✅ Deleted!', '#10b981');
+      loadServicesList();
+      loadDashboard();
+    }
+
+    async function deleteOffer(id) {
+      if (!confirm('Delete?')) return;
+      await supabase.from('offers').delete().eq('id', id);
+      notify('✅ Deleted!', '#10b981');
+      loadOffersList();
+      loadDashboard();
+    }
+  </script>
 </body>
 </html>
