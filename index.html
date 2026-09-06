@@ -8,6 +8,12 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://notgamersyt5454-sys.github.io/allhandlers-website/">
+  <meta name="google-site-verification" content="QoeuWDTxmPK3bMmPbizSktXQCYpdfv310M07ZElDH8g">
+  <meta name="msvalidate.01" content="D4E1D6481133010922C8A237AC9EC696">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AllHandlers | Professional Web Development & Digital Solutions">
+  <meta property="og:description" content="Premium digital agency for web development, UI/UX design, SEO & custom software at affordable prices.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -73,42 +79,6 @@
     .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; }
     .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 2rem; }
 
-    .slider-container { position: relative; overflow: hidden; padding: 0 40px; }
-    .slider-track { display: flex; gap: 1.5rem; transition: transform 0.5s ease; }
-    .slider-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: white; border: 1px solid var(--border); border-radius: 50%;
-      width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem;
-      z-index: 10; box-shadow: var(--shadow);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .slider-btn.prev { left: 0; }
-    .slider-btn.next { right: 0; }
-
-    .service-card {
-      min-width: 280px; max-width: 280px; flex-shrink: 0;
-      background: white; border-radius: var(--radius);
-      box-shadow: var(--shadow); overflow: hidden;
-      border: 1px solid var(--border); transition: 0.3s;
-    }
-    .service-card:hover { transform: translateY(-6px); }
-    .service-image { height: 180px; overflow: hidden; position: relative; }
-    .service-image img { width: 100%; height: 100%; object-fit: cover; }
-    .badge {
-      position: absolute; top: 10px; left: 10px;
-      background: #ef4444; color: white; padding: 0.3rem 0.8rem;
-      border-radius: 50px; font-size: 0.75rem; font-weight: 600;
-    }
-    .badge-offer { background: #f59e0b; }
-    .service-info { padding: 1rem; }
-    .service-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.3rem; }
-    .price-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; }
-    .original-price { text-decoration: line-through; color: var(--text-light); font-size: 0.85rem; }
-    .current-price { font-weight: 700; font-size: 1.2rem; color: var(--accent); }
-    .save-badge { background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
-    .countdown { display: flex; gap: 0.4rem; }
-    .countdown span { background: var(--primary); color: white; padding: 0.3rem 0.6rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; }
-
     .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
     .why-card { background: white; border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); border: 1px solid var(--border); }
     .why-icon { font-size: 2rem; margin-bottom: 0.5rem; }
@@ -134,8 +104,6 @@
       .hero-content { padding-right: 0; }
       .hero-content h1 { font-size: 2rem; }
       .hero-image { min-height: 250px; }
-      .slider-container { padding: 0 20px; }
-      .service-card { min-width: 240px; max-width: 240px; }
     }
   </style>
 </head>
@@ -146,8 +114,6 @@
       <a href="#" class="logo">All<span>Handlers</span></a>
       <div class="nav-links">
         <a onclick="scrollToSection('home')">Home</a>
-        <a onclick="scrollToSection('services')">Services</a>
-        <a onclick="scrollToSection('offers')">Offers</a>
         <a onclick="scrollToSection('about')">About</a>
         <a onclick="scrollToSection('contact')">Contact</a>
         <a href="admin.html" class="btn btn-primary btn-small">Admin</a>
@@ -161,7 +127,7 @@
         <h1>Professional Web Development at <span>Affordable Prices</span></h1>
         <p>AllHandlers delivers premium websites, UI/UX design, SEO, and custom software solutions for businesses and startups worldwide.</p>
         <div class="hero-buttons">
-          <a onclick="scrollToSection('services')" class="btn btn-primary" style="cursor:pointer;">Our Services</a>
+          <a href="https://wa.me/923712245418" target="_blank" class="btn btn-primary">Get Started</a>
           <a href="https://wa.me/923712245418" target="_blank" class="btn btn-whatsapp">💬 Chat on WhatsApp</a>
         </div>
       </div>
@@ -185,33 +151,10 @@
     </div>
   </section>
 
-  <section id="services">
-    <div class="container">
-      <h2 class="section-title">Featured Services</h2>
-      <p class="section-subtitle">Our most popular digital solutions</p>
-      <div class="slider-container" id="featuredSlider"></div>
-    </div>
-  </section>
-
-  <section id="offers" style="background:var(--surface);">
-    <div class="container">
-      <h2 class="section-title">Special Offers</h2>
-      <p class="section-subtitle">Limited time deals on our services</p>
-      <div class="slider-container" id="offersSlider"></div>
-    </div>
-  </section>
-
-  <section>
-    <div class="container">
-      <h2 class="section-title">All Services</h2>
-      <div class="slider-container" id="allServicesSlider"></div>
-    </div>
-  </section>
-
   <section id="about" style="background:var(--surface);">
     <div class="container" style="max-width:700px;text-align:center;">
       <h2 class="section-title">About AllHandlers</h2>
-      <p style="color:var(--text-light);">AllHandlers is a professional digital agency offering web development, UI/UX design, SEO, graphic design, and custom software solutions at affordable prices.</p>
+      <p style="color:var(--text-light);">AllHandlers is a professional digital agency offering web development, UI/UX design, SEO, graphic design, and custom software solutions at affordable prices. We help businesses establish a strong online presence and grow their brand.</p>
     </div>
   </section>
 
@@ -245,93 +188,9 @@
   <script>
     const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
-    const WHATSAPP_NUMBER = '923712245418';
 
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    async function apiQuery(table) {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, {
-          headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
-        });
-        return await res.json();
-      } catch(e) { console.error('Error:', e); return []; }
-    }
-
-    async function apiInsert(table, data) {
-      await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-        method: 'POST',
-        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      });
-    }
-
-    function serviceCard(s) {
-      const discount = s.discount_price ? Math.round(((s.price - s.discount_price) / s.price) * 100) : 0;
-      return `<div class="service-card">
-        <div class="service-image">
-          ${discount > 0 ? `<span class="badge">SAVE ${discount}%</span>` : ''}
-          <img src="${s.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${s.name}" loading="lazy">
-        </div>
-        <div class="service-info">
-          <h3>${s.name}</h3>
-          <span style="font-size:0.85rem;color:var(--text-light);">${s.brand || 'Service'}</span>
-          <div class="price-row">
-            ${s.discount_price ? `<span class="original-price">Rs. ${Number(s.price).toLocaleString()}</span>` : ''}
-            <span class="current-price">Rs. ${Number(s.discount_price || s.price).toLocaleString()}</span>
-          </div>
-          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the ${s.name} service for Rs. ${Number(s.discount_price || s.price).toLocaleString()}. Is it available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;">Get This Service</a>
-        </div>
-      </div>`;
-    }
-
-    function offerCard(o) {
-      const discount = o.discount_percentage || Math.round(((o.original_price - o.discounted_price) / o.original_price) * 100);
-      const diff = new Date(o.expiry_date) - new Date();
-      if (diff <= 0) return '';
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      return `<div class="service-card">
-        <div class="service-image">
-          <span class="badge badge-offer">SPECIAL OFFER</span>
-          <img src="${o.image_url || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&auto=format'}" alt="${o.title}" loading="lazy">
-        </div>
-        <div class="service-info">
-          <h3>${o.title}</h3>
-          <div class="price-row">
-            <span class="original-price">Rs. ${Number(o.original_price).toLocaleString()}</span>
-            <span class="current-price">Rs. ${Number(o.discounted_price).toLocaleString()}</span>
-            <span class="save-badge">SAVE ${discount}%</span>
-          </div>
-          <div class="countdown"><span>${days}d</span><span>${hours}h</span><span>${mins}m</span></div>
-          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in the offer: ${o.title} for Rs. ${Number(o.discounted_price).toLocaleString()}. Is it still available?`)}" target="_blank" class="btn btn-whatsapp" style="width:100%;padding:0.6rem;margin-top:0.5rem;">Get This Deal</a>
-        </div>
-      </div>`;
-    }
-
-    function renderSlider(id, items, fn) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (!items.length) {
-        el.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:1rem;">No items yet. Add from Admin panel.</p>';
-        return;
-      }
-      el.innerHTML = `<button class="slider-btn prev" onclick="slide('${id}', -1)">‹</button>
-        <div class="slider-track" id="${id}-track">${items.map(fn).join('')}</div>
-        <button class="slider-btn next" onclick="slide('${id}', 1)">›</button>`;
-    }
-
-    let positions = {};
-    function slide(id, dir) {
-      const track = document.getElementById(id + '-track');
-      if (!track || !track.children.length) return;
-      positions[id] = (positions[id] || 0) + dir;
-      if (positions[id] < 0) positions[id] = track.children.length - 1;
-      if (positions[id] >= track.children.length) positions[id] = 0;
-      track.style.transform = `translateX(-${positions[id] * (track.children[0].offsetWidth + 24)}px)`;
     }
 
     async function submitQuery() {
@@ -340,20 +199,17 @@
       const service = document.getElementById('qService').value;
       const message = document.getElementById('qMessage').value;
       if (!name || !email || !message) { alert('❌ Please fill required fields'); return; }
-      await apiInsert('queries', { name, email, service, message, status: 'new' });
+      await fetch(`${SUPABASE_URL}/rest/v1/queries`, {
+        method: 'POST',
+        headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, email, service, message, status: 'new' })
+      });
       alert('✅ Message sent!');
+      document.getElementById('qName').value = '';
+      document.getElementById('qEmail').value = '';
+      document.getElementById('qService').value = '';
+      document.getElementById('qMessage').value = '';
     }
-
-    async function init() {
-      const services = await apiQuery('products');
-      const offers = await apiQuery('offers');
-      const activeOffers = offers.filter(o => o.active && new Date(o.expiry_date) > new Date());
-      renderSlider('featuredSlider', services.slice(0, 6), serviceCard);
-      renderSlider('offersSlider', activeOffers, offerCard);
-      renderSlider('allServicesSlider', services, serviceCard);
-    }
-
-    init();
   </script>
 </body>
 </html>
