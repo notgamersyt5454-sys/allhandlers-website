@@ -49,15 +49,19 @@
     }
     .sidebar a:hover { background: rgba(255,255,255,0.1); color: white; }
     .sidebar a.active { background: var(--accent); color: white; }
+    .badge-count {
+      background: var(--danger); color: white; padding: 0.1rem 0.5rem;
+      border-radius: 50px; font-size: 0.7rem; margin-left: 0.5rem;
+    }
     
     .main-content { margin-left: 240px; padding: 2rem; }
     .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
     .topbar h1 { font-size: 1.8rem; }
     .logout-btn { background: var(--danger); color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; }
     
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
     .stat-card { background: var(--surface); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-    .stat-card h3 { font-size: 2.5rem; font-weight: 700; }
+    .stat-card h3 { font-size: 2rem; font-weight: 700; }
     .stat-card p { color: var(--text-light); font-size: 0.9rem; }
     
     .panel { background: var(--surface); border-radius: 16px; padding: 2rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid var(--border); display: none; }
@@ -72,7 +76,7 @@
       border-radius: 8px; font-size: 0.95rem; font-family: inherit;
     }
     
-    .btn { padding: 0.8rem 2rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
+    .btn { padding: 0.7rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
     .btn-primary { background: var(--accent); color: white; }
     .btn-success { background: var(--success); color: white; }
     .btn-danger { background: var(--danger); color: white; }
@@ -85,11 +89,17 @@
     .badge { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
     .badge-active { background: #dcfce7; color: #166534; }
     .badge-expired { background: #fef3c7; color: #92400e; }
+    .badge-new { background: #dbeafe; color: #1e40af; }
+    .badge-read { background: #f1f5f9; color: #64748b; }
+    
+    .query-card {
+      background: var(--bg); border-radius: 12px; padding: 1rem;
+      margin-bottom: 0.8rem; border-left: 4px solid var(--accent);
+    }
+    .query-card h4 { margin-bottom: 0.3rem; }
+    .query-card p { font-size: 0.9rem; color: var(--text-light); }
     
     #notify { position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; border-radius: 12px; color: white; font-weight: 600; display: none; z-index: 9999; }
-    
-    .live-indicator { display: inline-block; width: 10px; height: 10px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; margin-right: 5px; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
     
     @media (max-width: 768px) {
       .sidebar { width: 60px; }
@@ -119,23 +129,24 @@
       <a class="active" onclick="showSection('dashboard')">📊 Dashboard</a>
       <a onclick="showSection('addService')">➕ Add Service</a>
       <a onclick="showSection('addOffer')">🏷️ Add Offer</a>
-      <a onclick="showSection('services')">🛠️ Manage Services</a>
-      <a onclick="showSection('offers')">🎯 Manage Offers</a>
+      <a onclick="showSection('services')">🛠️ Services</a>
+      <a onclick="showSection('offers')">🎯 Offers</a>
+      <a onclick="showSection('queries')">📩 Queries <span class="badge-count" id="queryCount">0</span></a>
     </div>
 
     <div class="main-content">
       <div class="topbar">
-        <h1 id="pageTitle"><span class="live-indicator"></span>Dashboard</h1>
+        <h1 id="pageTitle">Dashboard</h1>
         <button class="logout-btn" onclick="logout()">Logout</button>
       </div>
 
       <div class="panel active" id="section-dashboard">
-        <h2>Live Overview <span style="font-size:0.8rem;color:var(--success);">● Realtime</span></h2>
+        <h2>Overview</h2>
         <div class="stats-grid">
-          <div class="stat-card"><h3 id="totalServices">0</h3><p>Total Services</p></div>
-          <div class="stat-card"><h3 id="totalOffers">0</h3><p>Total Offers</p></div>
-          <div class="stat-card"><h3 style="color:var(--success);" id="activeOffers">0</h3><p>Active Offers</p></div>
-          <div class="stat-card"><h3 style="color:var(--danger);" id="expiredOffers">0</h3><p>Expired Offers</p></div>
+          <div class="stat-card"><h3 id="totalServices">0</h3><p>Services</p></div>
+          <div class="stat-card"><h3 id="totalOffers">0</h3><p>Offers</p></div>
+          <div class="stat-card"><h3 id="totalQueries">0</h3><p>Queries</p></div>
+          <div class="stat-card"><h3 style="color:var(--danger);" id="newQueries">0</h3><p>New Queries</p></div>
         </div>
       </div>
 
@@ -170,13 +181,18 @@
       </div>
 
       <div class="panel" id="section-services">
-        <h2>Manage Services <span style="font-size:0.8rem;color:var(--success);">● Live</span></h2>
+        <h2>Manage Services</h2>
         <table class="table"><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead><tbody id="servicesTable"></tbody></table>
       </div>
 
       <div class="panel" id="section-offers">
-        <h2>Manage Offers <span style="font-size:0.8rem;color:var(--success);">● Live</span></h2>
+        <h2>Manage Offers</h2>
         <table class="table"><thead><tr><th>Title</th><th>Price</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody id="offersTable"></tbody></table>
+      </div>
+
+      <div class="panel" id="section-queries">
+        <h2>Customer Queries</h2>
+        <div id="queriesList"></div>
       </div>
     </div>
   </div>
@@ -193,57 +209,37 @@
       setTimeout(() => n.style.display = 'none', 3000);
     }
 
+    // Check if already logged in
+    if (localStorage.getItem('allhandlers_logged_in') === 'true') {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadDashboard();
+      loadQueries();
+    }
+
     function login() {
       const email = document.getElementById('emailInput').value;
       const password = document.getElementById('passwordInput').value;
       if (email === 'admin@allhandlers.com' && password === 'Admin@12345') {
+        localStorage.setItem('allhandlers_logged_in', 'true');
         document.getElementById('loginBox').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         loadDashboard();
-        subscribeRealtime();
-        notify('✅ Welcome! Realtime connected', '#10b981');
+        loadQueries();
+        notify('✅ Welcome back!', '#10b981');
       } else {
         document.getElementById('loginError').textContent = '❌ Invalid credentials';
       }
     }
 
     function logout() {
+      localStorage.removeItem('allhandlers_logged_in');
       document.getElementById('loginBox').style.display = 'block';
       document.getElementById('adminPanel').style.display = 'none';
     }
 
-    // REALTIME SUBSCRIPTION
-    function subscribeRealtime() {
-      const wsUrl = `wss://${SUPABASE_URL.replace('https://','')}/realtime/v1/websocket?apikey=${SUPABASE_ANON_KEY}&vsn=1.0`;
-      const ws = new WebSocket(wsUrl);
-      
-      ws.onopen = () => {
-        ws.send(JSON.stringify({
-          type: 'phx_join',
-          topic: 'realtime:products',
-          payload: { config: { postgres_changes: [{ event: '*', schema: 'public', table: 'products' }] } },
-          ref: '1'
-        }));
-        ws.send(JSON.stringify({
-          type: 'phx_join',
-          topic: 'realtime:offers',
-          payload: { config: { postgres_changes: [{ event: '*', schema: 'public', table: 'offers' }] } },
-          ref: '2'
-        }));
-      };
-      
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === 'phx_reply' || data.type === 'postgres_changes') {
-          loadDashboard();
-          if (document.getElementById('section-services').classList.contains('active')) loadServicesList();
-          if (document.getElementById('section-offers').classList.contains('active')) loadOffersList();
-        }
-      };
-    }
-
     async function apiQuery(table) {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, {
         headers: {'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`}
       });
       return await res.json();
@@ -269,21 +265,23 @@
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.getElementById('section-' + section).classList.add('active');
       event.target.classList.add('active');
-      const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Manage Services', offers:'Manage Offers'};
-      document.getElementById('pageTitle').innerHTML = `<span class="live-indicator"></span>${titles[section]}`;
+      const titles = {dashboard:'Dashboard', addService:'Add Service', addOffer:'Add Offer', services:'Services', offers:'Offers', queries:'Queries'};
+      document.getElementById('pageTitle').textContent = titles[section];
       if (section === 'services') loadServicesList();
       if (section === 'offers') loadOffersList();
+      if (section === 'queries') loadQueries();
       if (section === 'dashboard') loadDashboard();
     }
 
     async function loadDashboard() {
       const services = await apiQuery('products');
       const offers = await apiQuery('offers');
+      const queries = await apiQuery('queries');
       const now = new Date();
       document.getElementById('totalServices').textContent = services.length || 0;
       document.getElementById('totalOffers').textContent = offers.length || 0;
-      document.getElementById('activeOffers').textContent = offers.filter(o => o.active && new Date(o.expiry_date) > now).length || 0;
-      document.getElementById('expiredOffers').textContent = offers.filter(o => new Date(o.expiry_date) <= now).length || 0;
+      document.getElementById('totalQueries').textContent = queries.length || 0;
+      document.getElementById('newQueries').textContent = queries.filter(q => q.status === 'new').length || 0;
     }
 
     async function loadServicesList() {
@@ -300,6 +298,20 @@
         const expired = new Date(o.expiry_date) <= now;
         return `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td>${new Date(o.expiry_date).toLocaleDateString()}</td><td><span class="badge ${expired ? 'badge-expired' : 'badge-active'}">${expired ? 'EXPIRED' : 'ACTIVE'}</span></td><td><button class="btn btn-danger btn-small" onclick="deleteOffer(${o.id})">Delete</button></td></tr>`;
       }).join('') || '<tr><td colspan="5">No offers</td></tr>';
+    }
+
+    async function loadQueries() {
+      const data = await apiQuery('queries');
+      document.getElementById('queryCount').textContent = data.length || 0;
+      document.getElementById('queriesList').innerHTML = (data || []).map(q => `
+        <div class="query-card">
+          <h4>${q.name} <span class="badge ${q.status === 'new' ? 'badge-new' : 'badge-read'}">${q.status === 'new' ? 'NEW' : 'READ'}</span></h4>
+          <p><strong>Email:</strong> ${q.email} | <strong>Service:</strong> ${q.service || '-'}</p>
+          <p><strong>Message:</strong> ${q.message}</p>
+          <p style="font-size:0.75rem;color:var(--text-light);">${new Date(q.created_at).toLocaleString()}</p>
+          <button class="btn btn-danger btn-small" onclick="deleteQuery(${q.id})">Delete</button>
+        </div>
+      `).join('') || '<p>No queries yet.</p>';
     }
 
     async function addService() {
@@ -325,12 +337,24 @@
       if (!confirm('Delete?')) return;
       await apiDelete('products', id);
       notify('✅ Deleted!', '#10b981');
+      loadServicesList();
+      loadDashboard();
     }
 
     async function deleteOffer(id) {
       if (!confirm('Delete?')) return;
       await apiDelete('offers', id);
       notify('✅ Deleted!', '#10b981');
+      loadOffersList();
+      loadDashboard();
+    }
+
+    async function deleteQuery(id) {
+      if (!confirm('Delete query?')) return;
+      await apiDelete('queries', id);
+      notify('✅ Deleted!', '#10b981');
+      loadQueries();
+      loadDashboard();
     }
   </script>
 </body>
