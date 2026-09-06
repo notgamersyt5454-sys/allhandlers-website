@@ -6,43 +6,46 @@
   <title>AllHandlers Admin</title>
   <style>
     body { font-family: Arial; background: #f1f5f9; margin: 0; padding: 20px; }
-    #loginBox { max-width: 350px; margin: 100px auto; background: white; padding: 30px; border-radius: 16px; text-align: center; }
-    #loginBox input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    #loginBox { max-width: 350px; margin: 80px auto; background: white; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    #loginBox input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     #loginBox button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
+    #loginBox button:hover { background: #1d4ed8; }
     #adminPanel { display: none; max-width: 800px; margin: 0 auto; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .tabs button { padding: 10px 20px; margin: 5px; cursor: pointer; border: 1px solid #ddd; border-radius: 8px; background: white; }
-    .tabs button.active { background: #2563eb; color: white; }
-    .panel { display: none; background: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
+    .tabs button.active { background: #2563eb; color: white; border-color: #2563eb; }
+    .panel { display: none; background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
     .panel.active { display: block; }
-    input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; }
+    input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-    #notify { position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 12px; color: white; display: none; }
+    #notify { position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 12px; color: white; display: none; z-index: 999; }
   </style>
 </head>
 <body>
 
   <div id="loginBox">
     <h2>🔐 Admin Login</h2>
+    <p style="color:#64748b;font-size:0.9rem;">Default password: admin123</p>
     <input type="password" id="passwordInput" placeholder="Enter password">
     <button onclick="checkLogin()">Login</button>
-    <p id="loginError" style="color:red;"></p>
+    <p id="loginError" style="color:red;font-size:0.85rem;"></p>
   </div>
 
   <div id="notify"></div>
 
   <div id="adminPanel">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h2>AllHandlers Admin Dashboard</h2>
-      <button onclick="logout()" style="background:#ef4444;color:white;border:none;padding:10px 20px;border-radius:8px;">Logout</button>
+    <div class="header">
+      <h2>Admin Dashboard</h2>
+      <button onclick="logout()" style="background:#ef4444;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;">Logout</button>
     </div>
 
     <div class="tabs">
       <button class="active" onclick="showTab('dashboard')">Dashboard</button>
-      <button onclick="showTab('services')">Services</button>
-      <button onclick="showTab('offers')">Offers</button>
       <button onclick="showTab('addService')">+ Add Service</button>
       <button onclick="showTab('addOffer')">+ Add Offer</button>
+      <button onclick="showTab('services')">View Services</button>
+      <button onclick="showTab('offers')">View Offers</button>
     </div>
 
     <div class="panel active" id="panel-dashboard">
@@ -51,34 +54,34 @@
       <p>Offers: <strong id="totalOffers">0</strong></p>
     </div>
 
-    <div class="panel" id="panel-services">
-      <h3>Services List</h3>
-      <table><thead><tr><th>Name</th><th>Price</th><th>Delete</th></tr></thead><tbody id="servicesTable"></tbody></table>
-    </div>
-
-    <div class="panel" id="panel-offers">
-      <h3>Offers List</h3>
-      <table><thead><tr><th>Title</th><th>Price</th><th>Delete</th></tr></thead><tbody id="offersTable"></tbody></table>
-    </div>
-
     <div class="panel" id="panel-addService">
       <h3>Add Service</h3>
-      <input id="sName" placeholder="Service Name">
-      <input id="sBrand" placeholder="Category">
-      <input id="sPrice" placeholder="Price (Rs.)" type="number">
+      <input id="sName" placeholder="Service Name*">
+      <input id="sBrand" placeholder="Category*">
+      <input id="sPrice" placeholder="Price (Rs.)*" type="number">
       <input id="sDiscount" placeholder="Discounted Price (optional)" type="number">
-      <input id="sImage" placeholder="Image URL">
-      <button onclick="addService()" style="background:#2563eb;color:white;border:none;padding:12px 30px;border-radius:8px;">Add Service</button>
+      <input id="sImage" placeholder="Image URL (optional)">
+      <button onclick="addService()" style="background:#2563eb;color:white;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;width:100%;">Add Service</button>
     </div>
 
     <div class="panel" id="panel-addOffer">
       <h3>Add Offer</h3>
-      <input id="oTitle" placeholder="Offer Title">
-      <input id="oOriginalPrice" placeholder="Original Price" type="number">
-      <input id="oDiscountedPrice" placeholder="Discounted Price" type="number">
-      <input id="oExpiry" placeholder="Expiry Date" type="date">
-      <input id="oImage" placeholder="Image URL">
-      <button onclick="addOffer()" style="background:#10b981;color:white;border:none;padding:12px 30px;border-radius:8px;">Add Offer</button>
+      <input id="oTitle" placeholder="Offer Title*">
+      <input id="oOriginalPrice" placeholder="Original Price*" type="number">
+      <input id="oDiscountedPrice" placeholder="Discounted Price*" type="number">
+      <input id="oExpiry" placeholder="Expiry Date*" type="date">
+      <input id="oImage" placeholder="Image URL (optional)">
+      <button onclick="addOffer()" style="background:#10b981;color:white;border:none;padding:12px 30px;border-radius:8px;cursor:pointer;width:100%;">Add Offer</button>
+    </div>
+
+    <div class="panel" id="panel-services">
+      <h3>Services</h3>
+      <table><thead><tr><th>Name</th><th>Price</th><th>Delete</th></tr></thead><tbody id="servicesTable"></tbody></table>
+    </div>
+
+    <div class="panel" id="panel-offers">
+      <h3>Offers</h3>
+      <table><thead><tr><th>Title</th><th>Price</th><th>Delete</th></tr></thead><tbody id="offersTable"></tbody></table>
     </div>
   </div>
 
@@ -127,23 +130,25 @@
     }
 
     async function loadDashboard() {
-      const { data: services } = await supabase.from('products').select('*');
-      const { data: offers } = await supabase.from('offers').select('*');
-      document.getElementById('totalServices').textContent = services ? services.length : 0;
-      document.getElementById('totalOffers').textContent = offers ? offers.length : 0;
+      try {
+        const { data: services } = await supabase.from('products').select('*');
+        const { data: offers } = await supabase.from('offers').select('*');
+        document.getElementById('totalServices').textContent = services ? services.length : 0;
+        document.getElementById('totalOffers').textContent = offers ? offers.length : 0;
+      } catch(e) { console.log(e); }
     }
 
     async function loadServicesList() {
       const { data } = await supabase.from('products').select('*');
       document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
-        `<tr><td>${s.name}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button onclick="deleteService(${s.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;">Delete</button></td></tr>`
+        `<tr><td>${s.name}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button onclick="deleteService(${s.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;cursor:pointer;">Delete</button></td></tr>`
       ).join('') || '<tr><td colspan="3">No services</td></tr>';
     }
 
     async function loadOffersList() {
       const { data } = await supabase.from('offers').select('*');
       document.getElementById('offersTable').innerHTML = (data || []).map(o => 
-        `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td><button onclick="deleteOffer(${o.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;">Delete</button></td></tr>`
+        `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td><button onclick="deleteOffer(${o.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;cursor:pointer;">Delete</button></td></tr>`
       ).join('') || '<tr><td colspan="3">No offers</td></tr>';
     }
 
