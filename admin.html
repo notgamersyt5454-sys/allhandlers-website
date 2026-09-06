@@ -9,12 +9,11 @@
     #loginBox { max-width: 350px; margin: 80px auto; background: white; padding: 30px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
     #loginBox input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     #loginBox button { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; }
-    #loginBox button:hover { background: #1d4ed8; }
     #adminPanel { display: none; max-width: 800px; margin: 0 auto; }
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
     .tabs button { padding: 10px 20px; margin: 5px; cursor: pointer; border: 1px solid #ddd; border-radius: 8px; background: white; }
     .tabs button.active { background: #2563eb; color: white; border-color: #2563eb; }
-    .panel { display: none; background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .panel { display: none; background: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
     .panel.active { display: block; }
     input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     table { width: 100%; border-collapse: collapse; }
@@ -26,7 +25,6 @@
 
   <div id="loginBox">
     <h2>🔐 Admin Login</h2>
-    <p style="color:#64748b;font-size:0.9rem;">Default password: admin123</p>
     <input type="password" id="passwordInput" placeholder="Enter password">
     <button onclick="checkLogin()">Login</button>
     <p id="loginError" style="color:red;font-size:0.85rem;"></p>
@@ -85,13 +83,15 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
+  <script type="text/javascript">
+    // Only declare supabase ONCE
+    if (typeof window.supabaseClient === 'undefined') {
+      window.supabaseClient = null;
+    }
+
     const ADMIN_PASSWORD = 'admin123';
-    const supabase = window.supabase.createClient(
-      'https://xdlixvdxekmhnoejdmuz.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk'
-    );
+    const SUPABASE_URL = 'https://xdlixvdxekmhnoejdmuz.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkbGl4dmR4ZWttaG5vZWpkbXV6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2NzkwODksImV4cCI6MjEwNDI1NTA4OX0.D_nAwkAxu4cHFy-PgDaJ4UJpBNxf30EQ3KC-ghi6lEk';
 
     function notify(msg, color) {
       const n = document.getElementById('notify');
@@ -129,24 +129,60 @@
       if (tab === 'dashboard') loadDashboard();
     }
 
+    async function supabaseQuery(table) {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*`, {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    }
+
+    async function supabaseInsert(table, data) {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      return await response.json();
+    }
+
+    async function supabaseDelete(table, id) {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+        method: 'DELETE',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return await response.json();
+    }
+
     async function loadDashboard() {
       try {
-        const { data: services } = await supabase.from('products').select('*');
-        const { data: offers } = await supabase.from('offers').select('*');
+        const services = await supabaseQuery('products');
+        const offers = await supabaseQuery('offers');
         document.getElementById('totalServices').textContent = services ? services.length : 0;
         document.getElementById('totalOffers').textContent = offers ? offers.length : 0;
       } catch(e) { console.log(e); }
     }
 
     async function loadServicesList() {
-      const { data } = await supabase.from('products').select('*');
+      const data = await supabaseQuery('products');
       document.getElementById('servicesTable').innerHTML = (data || []).map(s => 
         `<tr><td>${s.name}</td><td>Rs. ${Number(s.price).toLocaleString()}</td><td><button onclick="deleteService(${s.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;cursor:pointer;">Delete</button></td></tr>`
       ).join('') || '<tr><td colspan="3">No services</td></tr>';
     }
 
     async function loadOffersList() {
-      const { data } = await supabase.from('offers').select('*');
+      const data = await supabaseQuery('offers');
       document.getElementById('offersTable').innerHTML = (data || []).map(o => 
         `<tr><td>${o.title}</td><td>Rs. ${Number(o.discounted_price).toLocaleString()}</td><td><button onclick="deleteOffer(${o.id})" style="background:#ef4444;color:white;border:none;padding:5px 15px;border-radius:5px;cursor:pointer;">Delete</button></td></tr>`
       ).join('') || '<tr><td colspan="3">No offers</td></tr>';
@@ -157,8 +193,7 @@
       const brand = document.getElementById('sBrand').value;
       const price = document.getElementById('sPrice').value;
       if (!name || !brand || !price) { notify('❌ Fill all fields', '#ef4444'); return; }
-      const { error } = await supabase.from('products').insert([{name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value}]);
-      if (error) { notify('❌ ' + error.message, '#ef4444'); return; }
+      await supabaseInsert('products', {name, brand, price: Number(price), discount_price: document.getElementById('sDiscount').value ? Number(document.getElementById('sDiscount').value) : null, image_url: document.getElementById('sImage').value});
       notify('✅ Service added!', '#10b981');
       loadDashboard();
     }
@@ -169,15 +204,14 @@
       const discounted = Number(document.getElementById('oDiscountedPrice').value);
       const expiry = document.getElementById('oExpiry').value;
       if (!title || !original || !discounted || !expiry) { notify('❌ Fill all fields', '#ef4444'); return; }
-      const { error } = await supabase.from('offers').insert([{title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true}]);
-      if (error) { notify('❌ ' + error.message, '#ef4444'); return; }
+      await supabaseInsert('offers', {title, original_price: original, discounted_price: discounted, discount_percentage: Math.round(((original-discounted)/original)*100), expiry_date: expiry, image_url: document.getElementById('oImage').value, active: true});
       notify('✅ Offer added!', '#10b981');
       loadDashboard();
     }
 
     async function deleteService(id) {
       if (!confirm('Delete?')) return;
-      await supabase.from('products').delete().eq('id', id);
+      await supabaseDelete('products', id);
       notify('✅ Deleted!', '#10b981');
       loadServicesList();
       loadDashboard();
@@ -185,7 +219,7 @@
 
     async function deleteOffer(id) {
       if (!confirm('Delete?')) return;
-      await supabase.from('offers').delete().eq('id', id);
+      await supabaseDelete('offers', id);
       notify('✅ Deleted!', '#10b981');
       loadOffersList();
       loadDashboard();
